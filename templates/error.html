@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackForge — Error</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050814;
+      --bg2: #080d1f;
+      --surface: rgba(10, 15, 35, 0.85);
+      --border: rgba(0, 245, 212, 0.15);
+      --neon-cyan: #00f5d4;
+      --neon-pink: #f700ff;
+      --neon-blue: #0066ff;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --red: #ff2d55;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+    }
+    .hf-bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,245,212,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,212,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .hf-bg-glow {
+      position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+    }
+    .glow-1 { width: 500px; height: 500px; background: rgba(0,245,212,0.06); top: -100px; right: -100px; }
+    .glow-2 { width: 400px; height: 400px; background: rgba(247,0,255,0.05); bottom: -100px; left: -100px; }
+    .error-container {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .error-brand {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem; font-weight: 700;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      margin-bottom: 60px;
+      letter-spacing: 0.15em;
+    }
+    .error-brand .hex { font-size: 1.4rem; }
+    .error-code-wrap {
+      position: relative;
+      margin-bottom: 40px;
+    }
+    .error-code {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(6rem, 18vw, 12rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(0,245,212,0.4));
+      animation: errorPulse 3s ease-in-out infinite;
+    }
+    .error-code-glitch {
+      position: absolute; top: 0; left: 0; right: 0;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(6rem, 18vw, 12rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--neon-pink);
+      opacity: 0;
+      animation: glitch 4s infinite;
+    }
+    @keyframes errorPulse {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(0,245,212,0.4)); }
+      50% { filter: drop-shadow(0 0 80px rgba(0,245,212,0.7)); }
+    }
+    @keyframes glitch {
+      0%, 90%, 100% { opacity: 0; transform: translate(0); }
+      91% { opacity: 0.6; transform: translate(-3px, 2px); clip-path: polygon(0 20%, 100% 20%, 100% 35%, 0 35%); }
+      92% { opacity: 0.4; transform: translate(3px, -2px); clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); }
+      93% { opacity: 0; }
+    }
+    .error-divider {
+      width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      margin: 0 auto 32px;
+      animation: scanline 2s ease-in-out infinite;
+    }
+    @keyframes scanline {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    .error-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .error-message {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+    .error-details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+    .error-details-header {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+    }
+    .error-trace {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .error-trace .highlight { color: var(--red); }
+    .error-actions {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: transparent;
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--neon-cyan);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { color: var(--bg); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.07);
+    }
+    .error-footer {
+      margin-top: 60px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(148,163,184,0.4);
+      letter-spacing: 0.1em;
+    }
+    .error-id-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      background: rgba(255,45,85,0.1);
+      border: 1px solid rgba(255,45,85,0.3);
+      border-radius: 3px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+    /* Animated scan line across the screen */
+    .scan-line {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      animation: scan 6s linear infinite;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+    @keyframes scan {
+      0% { top: -2px; }
+      100% { top: 100vh; }
+    }
+    /* Corner decorations */
+    .corner { position: fixed; width: 20px; height: 20px; pointer-events: none; z-index: 5; }
+    .corner-tl { top: 16px; left: 16px; border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+    .corner-tr { top: 16px; right: 16px; border-top: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+    .corner-br { bottom: 16px; right: 16px; border-bottom: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
+    /* Error type specific */
+    [data-code="404"] .error-code { background: linear-gradient(135deg, #0066ff 0%, #00f5d4 100%); -webkit-background-clip: text; background-clip: text; }
+    [data-code="403"] .error-code { background: linear-gradient(135deg, #ff9500 0%, #ff2d55 100%); -webkit-background-clip: text; background-clip: text; }
+    [data-code="500"] .error-code { background: linear-gradient(135deg, #ff2d55 0%, #f700ff 100%); -webkit-background-clip: text; background-clip: text; }
+  </style>
+</head>
+<body>
+  <div class="hf-bg-grid"></div>
+  <div class="hf-bg-glow glow-1"></div>
+  <div class="hf-bg-glow glow-2"></div>
+  <div class="scan-line"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="error-container" id="errorContainer" data-code="{{ error_code | default('500') }}">
+    <a href="/dashboard" class="error-brand">
+      <span class="hex">⬡</span>
+      <span>HACKFORGE</span>
+    </a>
+
+    <div class="error-id-tag">
+      <span>ERR_ID</span>
+      <span id="errorId">{{ error_id | default('HF-' + range(10000, 99999) | random | string) }}</span>
+    </div>
+
+    <div class="error-code-wrap">
+      <div class="error-code" id="errorCode">{{ error_code | default('500') }}</div>
+      <div class="error-code-glitch">{{ error_code | default('500') }}</div>
+    </div>
+
+    <div class="error-divider"></div>
+
+    <h1 class="error-title" id="errorTitle">
+      {% if error_code == '404' %}
+        SIGNAL LOST — PAGE NOT FOUND
+      {% elif error_code == '403' %}
+        ACCESS DENIED — UNAUTHORIZED
+      {% elif error_code == '429' %}
+        RATE LIMIT EXCEEDED
+      {% elif error_code == '503' %}
+        SERVICE UNAVAILABLE
+      {% else %}
+        SYSTEM FAILURE — INTERNAL ERROR
+      {% endif %}
+    </h1>
+
+    <p class="error-message" id="errorMessage">
+      {% if error_code == '404' %}
+        The resource you requested has vanished into the void. It may have been moved, deleted, or never existed.
+      {% elif error_code == '403' %}
+        Your access credentials don't grant permission to this area. Please check your team membership and role.
+      {% elif error_code == '429' %}
+        You've exceeded the request limit. Take a breath and try again in a moment.
+      {% elif error_code == '503' %}
+        HackForge is temporarily offline for maintenance. We'll be back online shortly.
+      {% else %}
+        An unexpected error occurred in the system. Our team has been notified and is investigating.
+      {% endif %}
+      {% if error_message %}{{ error_message }}{% endif %}
+    </p>
+
+    {% if error_trace and config.DEBUG %}
+    <div class="error-details">
+      <div class="error-details-header">» Stack Trace (debug mode)</div>
+      <pre class="error-trace">{{ error_trace }}</pre>
+    </div>
+    {% endif %}
+
+    <div class="error-actions">
+      <a href="/dashboard" class="btn-primary">
+        <span>⬡</span>
+        <span>RETURN TO DASHBOARD</span>
+      </a>
+      <button class="btn-secondary" onclick="history.back()">
+        ← GO BACK
+      </button>
+      {% if error_code == '500' %}
+      <button class="btn-secondary" onclick="location.reload()">
+        ↺ RETRY
+      </button>
+      {% endif %}
+    </div>
+
+    <div class="error-footer">
+      HACKFORGE WORKSPACE v2.0.0 &nbsp;•&nbsp; ERROR {{ error_code | default('500') }} &nbsp;•&nbsp;
+      <span id="errorTimestamp"></span>
+    </div>
+  </div>
+
+  <script>
+    // Set timestamp
+    document.getElementById('errorTimestamp').textContent = new Date().toISOString();
+
+    // Generate error ID if not set
+    const eid = document.getElementById('errorId');
+    if (!eid.textContent.includes('HF-') || eid.textContent === '') {
+      eid.textContent = 'HF-' + Math.floor(Math.random() * 89999 + 10000);
+    }
+
+    // Keyboard shortcut to go home
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || (e.key === 'h' && e.ctrlKey)) {
+        window.location.href = '/dashboard';
+      }
+      if (e.key === 'r' && !e.ctrlKey && !e.metaKey) {
+        location.reload();
+      }
+    });
+
+    // Random glitch text on error code
+    const errorCodeEl = document.getElementById('errorCode');
+    const originalCode = errorCodeEl.textContent.trim();
+    const glitchChars = '!@#$%^&*<>?/\\|';
+    setInterval(() => {
+      if (Math.random() > 0.95) {
+        const glitched = originalCode.split('').map(ch =>
+          Math.random() > 0.8 ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : ch
+        ).join('');
+        errorCodeEl.textContent = glitched;
+        setTimeout(() => { errorCodeEl.textContent = originalCode; }, 80);
+      }
+    }, 400);
+  </script>
+</body>
+</html>

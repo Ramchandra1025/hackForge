@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackForge — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/theme.css" />
+  <link rel="stylesheet" href="/static/css/animations.css" />
+  <link rel="stylesheet" href="/static/css/dashboard.css" />
+  <link rel="stylesheet" href="/static/css/responsive.css" />
+  <link rel="stylesheet" href="/static/css/components/toast.css" />
+  <link rel="stylesheet" href="/static/css/components/sidebar.css" />
+  <link rel="stylesheet" href="/static/css/components/navbar.css" />
+  <link rel="stylesheet" href="/static/css/components/cards.css" />
+  <link rel="stylesheet" href="/static/css/components/buttons.css" />
+  <link rel="stylesheet" href="/static/css/components/forms.css" />
+</head>
+<body class="hf-body">
+
+  <!-- Ambient Background -->
+  <div class="hf-bg-grid"></div>
+  <div class="hf-bg-glow glow-1"></div>
+  <div class="hf-bg-glow glow-2"></div>
+  <div class="hf-bg-particles" id="bgParticles"></div>
+
+  <!-- Loading Overlay -->
+  <div class="hf-loader-overlay" id="loaderOverlay">
+    <div class="hf-loader-inner">
+      <div class="hf-logo-loader">
+        <span class="logo-hex">⬡</span>
+        <span class="logo-text">HACKFORGE</span>
+      </div>
+      <div class="hf-loader-bar"><div class="hf-loader-fill" id="loaderFill"></div></div>
+      <div class="hf-loader-status" id="loaderStatus">Initializing workspace…</div>
+    </div>
+  </div>
+
+  <!-- Command Palette -->
+  <div class="hf-cmd-overlay" id="cmdOverlay">
+    <div class="hf-cmd-palette" id="cmdPalette">
+      <div class="hf-cmd-header">
+        <span class="hf-cmd-icon">⌘</span>
+        <input type="text" class="hf-cmd-input" id="cmdInput" placeholder="Search commands, files, people…" autocomplete="off" />
+        <kbd class="hf-kbd">ESC</kbd>
+      </div>
+      <div class="hf-cmd-body" id="cmdResults"></div>
+      <div class="hf-cmd-footer">
+        <span><kbd>↑↓</kbd> Navigate</span>
+        <span><kbd>↵</kbd> Select</span>
+        <span><kbd>Esc</kbd> Close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="hf-toast-stack" id="toastStack"></div>
+
+  <!-- Notification Panel -->
+  <div class="hf-notif-panel" id="notifPanel">
+    <div class="hf-notif-header">
+      <span>Notifications</span>
+      <button class="hf-notif-clear" id="clearNotifs">Clear all</button>
+    </div>
+    <div class="hf-notif-list" id="notifList">
+      <div class="hf-notif-empty">No notifications yet</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="hf-sidebar" id="sidebar">
+    <div class="hf-sidebar-brand">
+      <span class="brand-hex">⬡</span>
+      <span class="brand-name">HACK<em>FORGE</em></span>
+    </div>
+
+    <div class="hf-team-selector" id="teamSelector">
+      <div class="hf-team-badge" id="currentTeamBadge">
+        <span class="team-avatar" id="teamAvatarSidebar">T</span>
+        <div class="team-info">
+          <span class="team-name" id="teamNameSidebar">My Team</span>
+          <span class="team-role" id="teamRoleSidebar">Owner</span>
+        </div>
+        <span class="team-chevron">▾</span>
+      </div>
+      <div class="hf-team-dropdown" id="teamDropdown"></div>
+    </div>
+
+    <nav class="hf-nav">
+      <div class="hf-nav-section">
+        <span class="hf-nav-label">Workspace</span>
+        <a href="#" class="hf-nav-item active" data-view="dashboard">
+          <span class="nav-icon">⬡</span><span>Dashboard</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="editor">
+          <span class="nav-icon">✦</span><span>Code Editor</span>
+          <span class="hf-nav-badge" id="editorCollabCount"></span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="terminal">
+          <span class="nav-icon">▸</span><span>Terminal</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="kanban">
+          <span class="nav-icon">◫</span><span>Kanban</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="whiteboard">
+          <span class="nav-icon">◻</span><span>Whiteboard</span>
+        </a>
+      </div>
+
+      <div class="hf-nav-section">
+        <span class="hf-nav-label">Collaboration</span>
+        <a href="#" class="hf-nav-item" data-view="chat">
+          <span class="nav-icon">◈</span><span>Team Chat</span>
+          <span class="hf-nav-badge hf-nav-badge--red" id="chatUnreadBadge" style="display:none">0</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="meetings">
+          <span class="nav-icon">◉</span><span>Meetings</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="files">
+          <span class="nav-icon">◈</span><span>Files</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="wiki">
+          <span class="nav-icon">◎</span><span>Wiki / Docs</span>
+        </a>
+      </div>
+
+      <div class="hf-nav-section">
+        <span class="hf-nav-label">Deploy & Analyze</span>
+        <a href="#" class="hf-nav-item" data-view="deployments">
+          <span class="nav-icon">⟁</span><span>Deployments</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="analytics">
+          <span class="nav-icon">◌</span><span>Analytics</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="leaderboard">
+          <span class="nav-icon">◆</span><span>Leaderboard</span>
+        </a>
+      </div>
+
+      <div class="hf-nav-section">
+        <span class="hf-nav-label">AI Tools</span>
+        <a href="#" class="hf-nav-item" data-view="ai-copilot">
+          <span class="nav-icon ai-pulse">◈</span><span>AI Copilot</span>
+          <span class="hf-nav-tag">BETA</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="ai-planner">
+          <span class="nav-icon">◎</span><span>AI Planner</span>
+        </a>
+      </div>
+
+      <div class="hf-nav-section">
+        <span class="hf-nav-label">Settings</span>
+        <a href="#" class="hf-nav-item" data-view="settings">
+          <span class="nav-icon">◧</span><span>Settings</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="integrations">
+          <span class="nav-icon">⊕</span><span>Integrations</span>
+        </a>
+        <a href="#" class="hf-nav-item" data-view="audit">
+          <span class="nav-icon">◷</span><span>Audit Logs</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="hf-sidebar-footer">
+      <div class="hf-presence-strip" id="presenceStrip"></div>
+      <div class="hf-user-card" id="sidebarUserCard">
+        <div class="user-avatar-wrap">
+          <img class="user-avatar-img" id="sidebarAvatar" src="" alt="" />
+          <span class="user-status-dot online"></span>
+        </div>
+        <div class="user-info">
+          <span class="user-display-name" id="sidebarName">Loading…</span>
+          <span class="user-email" id="sidebarEmail"></span>
+        </div>
+        <button class="user-menu-btn" id="userMenuBtn">⋯</button>
+      </div>
+      <div class="hf-user-menu" id="userMenu">
+        <a href="#" data-view="profile">👤 Profile</a>
+        <a href="#" data-view="settings">⚙️ Settings</a>
+        <hr />
+        <a href="#" id="logoutBtn" class="danger">⏻ Logout</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="hf-main" id="mainContent">
+
+    <!-- Top Navbar -->
+    <header class="hf-topbar" id="topbar">
+      <button class="hf-sidebar-toggle" id="sidebarToggle">☰</button>
+      <div class="hf-breadcrumb" id="breadcrumb">
+        <span>Dashboard</span>
+      </div>
+      <div class="hf-topbar-actions">
+        <button class="hf-topbar-btn" id="searchBtn" title="Search (Ctrl+K)">
+          <span>⌕</span>
+        </button>
+        <button class="hf-topbar-btn" id="notifBtn" title="Notifications">
+          <span>🔔</span>
+          <span class="hf-notif-dot" id="notifDot" style="display:none"></span>
+        </button>
+        <button class="hf-topbar-btn hf-btn-ai" id="aiSidebarToggle" title="AI Copilot">
+          <span>◈</span> AI
+        </button>
+        <div class="hf-topbar-divider"></div>
+        <div class="hf-topbar-presence" id="topbarPresence"></div>
+      </div>
+    </header>
+
+    <!-- View Container -->
+    <div class="hf-view-container" id="viewContainer">
+
+      <!-- ===== DASHBOARD VIEW ===== -->
+      <section class="hf-view active" id="view-dashboard">
+        <div class="hf-dashboard-grid">
+
+          <!-- Welcome Hero -->
+          <div class="hf-hero-card glasscard col-span-full">
+            <div class="hero-content">
+              <div class="hero-greeting">
+                <span class="hero-tag">◈ WORKSPACE ACTIVE</span>
+                <h1 class="hero-title">Welcome back, <span class="hero-name" id="heroName">Hacker</span></h1>
+                <p class="hero-sub" id="heroSub">Your team has been busy. Here's what's happening.</p>
+              </div>
+              <div class="hero-stats">
+                <div class="hero-stat">
+                  <span class="stat-value" id="heroTasks">0</span>
+                  <span class="stat-label">Open Tasks</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="stat-value" id="heroCommits">0</span>
+                  <span class="stat-label">Commits Today</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="stat-value" id="heroOnline">0</span>
+                  <span class="stat-label">Online Now</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-decoration">
+              <div class="hero-hex-grid"></div>
+            </div>
+          </div>
+
+          <!-- Sprint Progress -->
+          <div class="hf-dash-card glasscard" id="sprintCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Active Sprint</span>
+              <span class="dash-card-action" id="sprintViewBtn">View All →</span>
+            </div>
+            <div class="sprint-progress-wrap" id="sprintProgress">
+              <div class="sprint-skeleton" id="sprintSkeleton">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+                <div class="skeleton-bar"></div>
+              </div>
+              <div class="sprint-data" id="sprintData" style="display:none">
+                <div class="sprint-name" id="sprintName">Sprint 1</div>
+                <div class="sprint-dates" id="sprintDates"></div>
+                <div class="sprint-bar-wrap">
+                  <div class="sprint-bar">
+                    <div class="sprint-bar-fill" id="sprintBarFill" style="width:0%"></div>
+                  </div>
+                  <span class="sprint-pct" id="sprintPct">0%</span>
+                </div>
+                <div class="sprint-counts" id="sprintCounts"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Online Members -->
+          <div class="hf-dash-card glasscard" id="membersCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Team Online</span>
+              <span class="hf-online-count" id="onlineCount">0 online</span>
+            </div>
+            <div class="members-list" id="membersList">
+              <div class="members-skeleton">
+                <div class="member-skel" v-for="i in 4"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Tasks -->
+          <div class="hf-dash-card glasscard wide" id="tasksCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">My Tasks</span>
+              <div class="dash-card-actions">
+                <button class="dash-mini-btn" id="addTaskQuickBtn">+ New</button>
+                <span class="dash-card-action" data-view="kanban">View Board →</span>
+              </div>
+            </div>
+            <div class="tasks-table-wrap">
+              <table class="hf-tasks-table" id="tasksTable">
+                <thead>
+                  <tr>
+                    <th>Task</th><th>Project</th><th>Priority</th><th>Status</th><th>Due</th>
+                  </tr>
+                </thead>
+                <tbody id="tasksTableBody">
+                  <tr class="skeleton-row"><td colspan="5"><div class="skeleton-line"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="hf-dash-card glasscard" id="activityCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Activity Feed</span>
+              <select class="dash-mini-select" id="activityFilter">
+                <option value="all">All</option>
+                <option value="code">Code</option>
+                <option value="tasks">Tasks</option>
+                <option value="chat">Chat</option>
+                <option value="deploy">Deploy</option>
+              </select>
+            </div>
+            <div class="activity-feed" id="activityFeed">
+              <div class="activity-skeleton">
+                <div class="act-skel" v-for="i in 5"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projects List -->
+          <div class="hf-dash-card glasscard" id="projectsCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Projects</span>
+              <button class="dash-mini-btn" id="newProjectBtn">+ New</button>
+            </div>
+            <div class="projects-list" id="projectsList">
+              <div class="project-item-skeleton" v-for="i in 3"></div>
+            </div>
+          </div>
+
+          <!-- Recent Files -->
+          <div class="hf-dash-card glasscard" id="filesCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Recent Files</span>
+              <span class="dash-card-action" data-view="files">Browse →</span>
+            </div>
+            <div class="recent-files" id="recentFiles"></div>
+          </div>
+
+          <!-- Quick Deploy -->
+          <div class="hf-dash-card glasscard" id="deployCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Deployments</span>
+              <span class="dash-card-action" data-view="deployments">All →</span>
+            </div>
+            <div class="deploy-list" id="deployList"></div>
+          </div>
+
+          <!-- Analytics Sparklines -->
+          <div class="hf-dash-card glasscard wide" id="analyticsCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title">This Week</span>
+              <div class="analytics-tabs" id="analyticsTabs">
+                <button class="atab active" data-metric="commits">Commits</button>
+                <button class="atab" data-metric="tasks">Tasks</button>
+                <button class="atab" data-metric="messages">Messages</button>
+              </div>
+            </div>
+            <canvas class="hf-sparkline-canvas" id="sparklineCanvas" height="80"></canvas>
+          </div>
+
+          <!-- AI Suggestions -->
+          <div class="hf-dash-card glasscard ai-card" id="aiSuggestCard">
+            <div class="dash-card-header">
+              <span class="dash-card-title ai-glow">◈ AI Insights</span>
+            </div>
+            <div class="ai-suggestions" id="aiSuggestions">
+              <div class="ai-suggestion-loading">
+                <span class="ai-dots"><span></span><span></span><span></span></span>
+                <span>Analyzing workspace…</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===== EDITOR VIEW (stub; loaded in workspace.html) ===== -->
+      <section class="hf-view" id="view-editor">
+        <div class="hf-view-loading">
+          <div class="hf-spinner"></div>
+          <span>Loading Code Editor…</span>
+        </div>
+      </section>
+
+      <!-- ===== KANBAN VIEW ===== -->
+      <section class="hf-view" id="view-kanban">
+        <div class="hf-kanban-toolbar">
+          <div class="hf-kt-left">
+            <select class="hf-select" id="kanbanProjectFilter">
+              <option value="">All Projects</option>
+            </select>
+            <select class="hf-select" id="kanbanSprintFilter">
+              <option value="">All Sprints</option>
+            </select>
+          </div>
+          <div class="hf-kt-right">
+            <input type="text" class="hf-input-sm" id="kanbanSearch" placeholder="Filter tasks…" />
+            <button class="hf-btn hf-btn-primary" id="kanbanAddTaskBtn">+ Task</button>
+          </div>
+        </div>
+        <div class="hf-kanban-board" id="kanbanBoard">
+          <!-- columns injected by kanban.js -->
+        </div>
+      </section>
+
+      <!-- ===== CHAT VIEW ===== -->
+      <section class="hf-view" id="view-chat">
+        <div class="hf-chat-layout">
+          <aside class="hf-chat-sidebar">
+            <div class="hf-chat-sidebar-header">
+              <span>Channels</span>
+              <button class="hf-icon-btn" id="addChannelBtn" title="New Channel">+</button>
+            </div>
+            <div class="hf-channel-list" id="channelList"></div>
+            <div class="hf-chat-sidebar-header" style="margin-top:12px">
+              <span>Direct Messages</span>
+              <button class="hf-icon-btn" id="addDMBtn" title="New DM">+</button>
+            </div>
+            <div class="hf-dm-list" id="dmList"></div>
+          </aside>
+          <div class="hf-chat-main" id="chatMain">
+            <div class="hf-chat-empty">
+              <span>◈</span>
+              <p>Select a channel or DM to start chatting</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FILES VIEW ===== -->
+      <section class="hf-view" id="view-files">
+        <div class="hf-files-toolbar">
+          <div class="hf-files-path" id="filesPath"><span>/ root</span></div>
+          <div class="hf-files-actions">
+            <button class="hf-btn hf-btn-ghost" id="filesUploadBtn">↑ Upload</button>
+            <button class="hf-btn hf-btn-ghost" id="filesNewFolderBtn">+ Folder</button>
+            <button class="hf-btn hf-btn-ghost" id="filesToggleView">⊞</button>
+          </div>
+        </div>
+        <div class="hf-files-drop-zone" id="filesDropZone">
+          <div class="hf-files-grid" id="filesGrid"></div>
+          <div class="hf-drop-overlay" id="dropOverlay">
+            <span>Drop files to upload</span>
+          </div>
+        </div>
+        <!-- Upload Modal -->
+        <div class="hf-modal-overlay" id="uploadModalOverlay" style="display:none">
+          <div class="hf-modal hf-upload-modal">
+            <div class="hf-modal-header">
+              <span>Upload Files</span>
+              <button class="hf-modal-close" id="uploadModalClose">✕</button>
+            </div>
+            <div class="hf-upload-zone" id="uploadZone">
+              <input type="file" id="fileInput" multiple hidden />
+              <span class="upload-zone-icon">⬆</span>
+              <p>Drag & drop files here or <button class="hf-link-btn" id="browseFilesBtn">browse</button></p>
+              <span class="upload-zone-hint">Max 100MB per file</span>
+            </div>
+            <div class="hf-upload-queue" id="uploadQueue"></div>
+            <div class="hf-modal-footer">
+              <button class="hf-btn hf-btn-ghost" id="cancelUploadBtn">Cancel</button>
+              <button class="hf-btn hf-btn-primary" id="startUploadBtn">Upload All</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== WHITEBOARD VIEW ===== -->
+      <section class="hf-view" id="view-whiteboard">
+        <div class="hf-wb-toolbar">
+          <div class="hf-wb-tools" id="wbTools">
+            <button class="hf-wb-tool active" data-tool="select" title="Select">↖</button>
+            <button class="hf-wb-tool" data-tool="pen" title="Pen">✏</button>
+            <button class="hf-wb-tool" data-tool="rect" title="Rectangle">▭</button>
+            <button class="hf-wb-tool" data-tool="ellipse" title="Ellipse">○</button>
+            <button class="hf-wb-tool" data-tool="arrow" title="Arrow">→</button>
+            <button class="hf-wb-tool" data-tool="text" title="Text">T</button>
+            <button class="hf-wb-tool" data-tool="sticky" title="Sticky Note">◫</button>
+            <button class="hf-wb-tool" data-tool="eraser" title="Eraser">⌫</button>
+          </div>
+          <div class="hf-wb-options" id="wbOptions">
+            <input type="color" class="hf-color-pick" id="wbColor" value="#00f5d4" title="Color" />
+            <input type="range" class="hf-range" id="wbSize" min="1" max="30" value="3" title="Size" />
+            <button class="hf-wb-action" id="wbUndo" title="Undo">↩</button>
+            <button class="hf-wb-action" id="wbRedo" title="Redo">↪</button>
+            <button class="hf-wb-action" id="wbClear" title="Clear">🗑</button>
+            <button class="hf-wb-action" id="wbExport" title="Export PNG">↓</button>
+          </div>
+          <div class="hf-wb-collab" id="wbCollab"></div>
+        </div>
+        <canvas class="hf-wb-canvas" id="wbCanvas"></canvas>
+        <div class="hf-wb-cursors" id="wbCursors"></div>
+      </section>
+
+      <!-- ===== DEPLOYMENTS VIEW ===== -->
+      <section class="hf-view" id="view-deployments">
+        <div class="hf-deploy-header">
+          <h2>Deployments</h2>
+          <button class="hf-btn hf-btn-primary" id="newDeployBtn">+ New Deployment</button>
+        </div>
+        <div class="hf-deploy-tabs">
+          <button class="dep-tab active" data-platform="all">All</button>
+          <button class="dep-tab" data-platform="netlify">Netlify</button>
+          <button class="dep-tab" data-platform="railway">Railway</button>
+          <button class="dep-tab" data-platform="github">GitHub</button>
+        </div>
+        <div class="hf-deploy-grid" id="deployGrid"></div>
+      </section>
+
+      <!-- ===== ANALYTICS VIEW ===== -->
+      <section class="hf-view" id="view-analytics">
+        <div class="hf-analytics-grid" id="analyticsGrid">
+          <div class="analytics-stat-card glasscard">
+            <span class="asc-icon">⟁</span>
+            <div class="asc-data">
+              <span class="asc-value" id="totalCommits">—</span>
+              <span class="asc-label">Total Commits</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glasscard">
+            <span class="asc-icon">◫</span>
+            <div class="asc-data">
+              <span class="asc-value" id="totalTasks">—</span>
+              <span class="asc-label">Tasks Completed</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glasscard">
+            <span class="asc-icon">◈</span>
+            <div class="asc-data">
+              <span class="asc-value" id="totalMessages">—</span>
+              <span class="asc-label">Messages Sent</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glasscard">
+            <span class="asc-icon">⬡</span>
+            <div class="asc-data">
+              <span class="asc-value" id="totalDeployments">—</span>
+              <span class="asc-label">Deployments</span>
+            </div>
+          </div>
+          <div class="analytics-chart-card glasscard col-span-2">
+            <div class="acc-header">Commit Activity (30 days)</div>
+            <canvas id="commitChart" height="120"></canvas>
+          </div>
+          <div class="analytics-chart-card glasscard col-span-2">
+            <div class="acc-header">Task Velocity</div>
+            <canvas id="velocityChart" height="120"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== WIKI VIEW ===== -->
+      <section class="hf-view" id="view-wiki">
+        <div class="hf-wiki-layout">
+          <aside class="hf-wiki-sidebar">
+            <div class="hf-wiki-sidebar-header">
+              <span>Pages</span>
+              <button class="hf-icon-btn" id="newWikiPageBtn">+</button>
+            </div>
+            <div class="hf-wiki-tree" id="wikiTree"></div>
+          </aside>
+          <div class="hf-wiki-editor" id="wikiEditor">
+            <div class="hf-wiki-empty">
+              <span>◎</span>
+              <p>Select a page or create a new one</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MEETINGS VIEW ===== -->
+      <section class="hf-view" id="view-meetings">
+        <div class="hf-meetings-header">
+          <h2>Meeting Rooms</h2>
+          <button class="hf-btn hf-btn-primary" id="newMeetingBtn">+ Create Room</button>
+        </div>
+        <div class="hf-meetings-grid" id="meetingsGrid"></div>
+        <div class="hf-jitsi-container" id="jitsiContainer" style="display:none">
+          <div class="hf-jitsi-toolbar">
+            <span id="jitsiRoomName"></span>
+            <button class="hf-btn hf-btn-danger" id="leaveJitsiBtn">Leave</button>
+          </div>
+          <div id="jitsiFrame"></div>
+        </div>
+      </section>
+
+      <!-- ===== LEADERBOARD VIEW ===== -->
+      <section class="hf-view" id="view-leaderboard">
+        <div class="hf-lb-header">
+          <h2>Leaderboard</h2>
+          <div class="hf-lb-filters">
+            <button class="lb-filter active" data-period="week">This Week</button>
+            <button class="lb-filter" data-period="month">This Month</button>
+            <button class="lb-filter" data-period="all">All Time</button>
+          </div>
+        </div>
+        <div class="hf-lb-podium" id="lbPodium"></div>
+        <div class="hf-lb-table-wrap">
+          <table class="hf-lb-table" id="lbTable">
+            <thead><tr><th>#</th><th>Member</th><th>Tasks</th><th>Commits</th><th>Reviews</th><th>Score</th></tr></thead>
+            <tbody id="lbTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== SETTINGS VIEW ===== -->
+      <section class="hf-view" id="view-settings">
+        <div class="hf-settings-layout">
+          <nav class="hf-settings-nav">
+            <button class="sn-item active" data-tab="profile">Profile</button>
+            <button class="sn-item" data-tab="team">Team</button>
+            <button class="sn-item" data-tab="notifications">Notifications</button>
+            <button class="sn-item" data-tab="security">Security</button>
+            <button class="sn-item" data-tab="api-keys">API Keys</button>
+            <button class="sn-item" data-tab="appearance">Appearance</button>
+            <button class="sn-item" data-tab="billing">Billing</button>
+          </nav>
+          <div class="hf-settings-content" id="settingsContent"></div>
+        </div>
+      </section>
+
+      <!-- ===== INTEGRATIONS VIEW ===== -->
+      <section class="hf-view" id="view-integrations">
+        <div class="hf-integrations-header">
+          <h2>Integrations</h2>
+          <p>Connect your favorite tools and services</p>
+        </div>
+        <div class="hf-integrations-grid" id="integrationsGrid"></div>
+      </section>
+
+      <!-- ===== AI COPILOT VIEW ===== -->
+      <section class="hf-view" id="view-ai-copilot">
+        <div class="hf-ai-layout">
+          <div class="hf-ai-chat-area" id="aiChatArea">
+            <div class="hf-ai-messages" id="aiMessages"></div>
+            <div class="hf-ai-input-wrap">
+              <textarea class="hf-ai-input" id="aiInput" placeholder="Ask HackForge AI anything…" rows="1"></textarea>
+              <button class="hf-btn hf-btn-ai" id="aiSendBtn">Send ◈</button>
+            </div>
+          </div>
+          <aside class="hf-ai-tools-panel">
+            <div class="hf-ai-tools-header">AI Tools</div>
+            <div class="hf-ai-tools-grid">
+              <button class="hf-ai-tool-btn" data-tool="reviewer">🔍 Code Reviewer</button>
+              <button class="hf-ai-tool-btn" data-tool="readme">📄 README Gen</button>
+              <button class="hf-ai-tool-btn" data-tool="planner">📅 Sprint Planner</button>
+              <button class="hf-ai-tool-btn" data-tool="bugfinder">🐛 Bug Finder</button>
+              <button class="hf-ai-tool-btn" data-tool="ppt">📊 PPT Gen</button>
+              <button class="hf-ai-tool-btn" data-tool="judge">⚖ Judge Sim</button>
+            </div>
+            <div class="hf-ai-memory-section">
+              <div class="hf-ai-tools-header">AI Memory</div>
+              <div class="hf-ai-memory-list" id="aiMemoryList"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== AI PLANNER VIEW ===== -->
+      <section class="hf-view" id="view-ai-planner">
+        <div class="hf-ai-planner-wrap" id="aiPlannerWrap">
+          <div class="hf-ai-planner-hero glasscard">
+            <h2 class="ai-glow">◈ AI Sprint Planner</h2>
+            <p>Let AI analyze your backlog and generate an optimal sprint plan</p>
+            <button class="hf-btn hf-btn-ai hf-btn-lg" id="generateSprintBtn">Generate Sprint Plan</button>
+          </div>
+          <div class="hf-ai-planner-result" id="plannerResult" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- ===== AUDIT LOGS VIEW ===== -->
+      <section class="hf-view" id="view-audit">
+        <div class="hf-audit-header">
+          <h2>Audit Logs</h2>
+          <div class="hf-audit-filters">
+            <input type="date" class="hf-input-sm" id="auditFrom" />
+            <input type="date" class="hf-input-sm" id="auditTo" />
+            <select class="hf-select" id="auditAction">
+              <option value="">All Actions</option>
+              <option value="auth">Auth</option>
+              <option value="file">Files</option>
+              <option value="task">Tasks</option>
+              <option value="deploy">Deploy</option>
+            </select>
+            <button class="hf-btn hf-btn-ghost" id="auditFilterBtn">Filter</button>
+          </div>
+        </div>
+        <div class="hf-audit-table-wrap">
+          <table class="hf-audit-table" id="auditTable">
+            <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Resource</th><th>IP</th><th>Status</th></tr></thead>
+            <tbody id="auditTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div><!-- /view-container -->
+  </main>
+
+  <!-- AI Copilot Sidebar (floating) -->
+  <div class="hf-ai-sidebar" id="aiSidebar">
+    <div class="hf-ai-sidebar-header">
+      <span class="ai-glow">◈ AI Copilot</span>
+      <button class="hf-modal-close" id="closeAiSidebar">✕</button>
+    </div>
+    <div class="hf-ai-sidebar-messages" id="aiSidebarMessages"></div>
+    <div class="hf-ai-sidebar-input">
+      <textarea class="hf-ai-sidebar-textarea" id="aiSidebarInput" placeholder="Ask me anything…" rows="2"></textarea>
+      <button class="hf-btn hf-btn-ai hf-btn-sm" id="aiSidebarSend">↑</button>
+    </div>
+  </div>
+
+  <!-- New Task Modal -->
+  <div class="hf-modal-overlay" id="newTaskModalOverlay" style="display:none">
+    <div class="hf-modal" id="newTaskModal">
+      <div class="hf-modal-header">
+        <span>New Task</span>
+        <button class="hf-modal-close" id="closeNewTaskModal">✕</button>
+      </div>
+      <div class="hf-modal-body">
+        <div class="hf-form-group">
+          <label>Title</label>
+          <input type="text" class="hf-input" id="taskTitleInput" placeholder="Task title…" />
+        </div>
+        <div class="hf-form-group">
+          <label>Description</label>
+          <textarea class="hf-textarea" id="taskDescInput" placeholder="Description…" rows="3"></textarea>
+        </div>
+        <div class="hf-form-row">
+          <div class="hf-form-group">
+            <label>Project</label>
+            <select class="hf-select" id="taskProjectSelect"></select>
+          </div>
+          <div class="hf-form-group">
+            <label>Priority</label>
+            <select class="hf-select" id="taskPrioritySelect">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </div>
+        </div>
+        <div class="hf-form-row">
+          <div class="hf-form-group">
+            <label>Assignee</label>
+            <select class="hf-select" id="taskAssigneeSelect"></select>
+          </div>
+          <div class="hf-form-group">
+            <label>Due Date</label>
+            <input type="date" class="hf-input" id="taskDueInput" />
+          </div>
+        </div>
+      </div>
+      <div class="hf-modal-footer">
+        <button class="hf-btn hf-btn-ghost" id="cancelNewTaskBtn">Cancel</button>
+        <button class="hf-btn hf-btn-primary" id="submitNewTaskBtn">Create Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Project Modal -->
+  <div class="hf-modal-overlay" id="newProjectModalOverlay" style="display:none">
+    <div class="hf-modal" id="newProjectModal">
+      <div class="hf-modal-header">
+        <span>New Project</span>
+        <button class="hf-modal-close" id="closeNewProjectModal">✕</button>
+      </div>
+      <div class="hf-modal-body">
+        <div class="hf-form-group">
+          <label>Project Name</label>
+          <input type="text" class="hf-input" id="projectNameInput" placeholder="My Awesome Project" />
+        </div>
+        <div class="hf-form-group">
+          <label>Description</label>
+          <textarea class="hf-textarea" id="projectDescInput" rows="2" placeholder="What is this project about?"></textarea>
+        </div>
+        <div class="hf-form-group">
+          <label>Repository URL (optional)</label>
+          <input type="url" class="hf-input" id="projectRepoInput" placeholder="https://github.com/…" />
+        </div>
+      </div>
+      <div class="hf-modal-footer">
+        <button class="hf-btn hf-btn-ghost" id="cancelNewProjectBtn">Cancel</button>
+        <button class="hf-btn hf-btn-primary" id="submitNewProjectBtn">Create Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/static/js/modules/utils/constants.js"></script>
+  <script src="/static/js/modules/utils/helpers.js"></script>
+  <script src="/static/js/modules/utils/validators.js"></script>
+  <script src="/static/js/modules/utils/formatter.js"></script>
+  <script src="/static/js/modules/ui/modal.js"></script>
+  <script src="/static/js/modules/ui/dropdown.js"></script>
+  <script src="/static/js/modules/ui/tooltip.js"></script>
+  <script src="/static/js/modules/ui/tabs.js"></script>
+  <script src="/static/js/modules/ui/context-menu.js"></script>
+  <script src="/static/js/toast.js"></script>
+  <script src="/static/js/loader.js"></script>
+  <script src="/static/js/state.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/socket.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/modules/realtime/presence-sync.js"></script>
+  <script src="/static/js/modules/realtime/cursors.js"></script>
+  <script src="/static/js/modules/realtime/sync-engine.js"></script>
+  <script src="/static/js/presence.js"></script>
+  <script src="/static/js/notifications.js"></script>
+  <script src="/static/js/command-palette.js"></script>
+  <script src="/static/js/theme-engine.js"></script>
+  <script src="/static/js/activity-feed.js"></script>
+  <script src="/static/js/search.js"></script>
+  <script src="/static/js/kanban.js"></script>
+  <script src="/static/js/chat.js"></script>
+  <script src="/static/js/whiteboard.js"></script>
+  <script src="/static/js/file-manager.js"></script>
+  <script src="/static/js/modules/uploads/upload-manager.js"></script>
+  <script src="/static/js/modules/uploads/upload-queue.js"></script>
+  <script src="/static/js/modules/uploads/preview-generator.js"></script>
+  <script src="/static/js/modules/uploads/chunk-upload.js"></script>
+  <script src="/static/js/uploader.js"></script>
+  <script src="/static/js/deployments.js"></script>
+  <script src="/static/js/analytics.js"></script>
+  <script src="/static/js/wiki.js"></script>
+  <script src="/static/js/meetings.js"></script>
+  <script src="/static/js/settings.js"></script>
+  <script src="/static/js/integrations.js"></script>
+  <script src="/static/js/modules/ai/ai-memory.js"></script>
+  <script src="/static/js/modules/ai/ai-reviewer.js"></script>
+  <script src="/static/js/modules/ai/ai-readme.js"></script>
+  <script src="/static/js/modules/ai/ai-planner.js"></script>
+  <script src="/static/js/modules/ai/ai-bugfinder.js"></script>
+  <script src="/static/js/modules/ai/ai-manager.js"></script>
+  <script src="/static/js/ai-sidebar.js"></script>
+  <script src="/static/js/router.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

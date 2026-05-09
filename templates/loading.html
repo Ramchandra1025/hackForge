@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackForge — Loading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050814;
+      --neon-cyan: #00f5d4;
+      --neon-pink: #f700ff;
+      --neon-blue: #0066ff;
+      --text-primary: #e2e8f0;
+      --text-dim: rgba(148,163,184,0.6);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Grid background */
+    .bg-grid {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,212,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,212,0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridScroll 20s linear infinite;
+    }
+    @keyframes gridScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    /* Ambient glows */
+    .glow { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+    .glow-1 { width: 600px; height: 600px; background: rgba(0,245,212,0.07); top: -150px; right: -150px; animation: glowPulse1 4s ease-in-out infinite; }
+    .glow-2 { width: 500px; height: 500px; background: rgba(247,0,255,0.05); bottom: -100px; left: -100px; animation: glowPulse2 5s ease-in-out infinite; }
+    .glow-3 { width: 300px; height: 300px; background: rgba(0,102,255,0.06); top: 40%; left: 40%; animation: glowPulse3 6s ease-in-out infinite; }
+    @keyframes glowPulse1 { 0%,100%{opacity:0.6} 50%{opacity:1} }
+    @keyframes glowPulse2 { 0%,100%{opacity:0.5} 50%{opacity:0.9} }
+    @keyframes glowPulse3 { 0%,100%{opacity:0.4} 50%{opacity:0.8} }
+
+    /* Particles */
+    .particles { position: fixed; inset: 0; overflow: hidden; }
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--neon-cyan);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat var(--dur) ease-in-out infinite var(--delay);
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) translateX(var(--drift)); opacity: 0; }
+      10% { opacity: var(--opacity); }
+      90% { opacity: var(--opacity); }
+      100% { transform: translateY(-20px) translateX(calc(var(--drift) * 1.5)); opacity: 0; }
+    }
+
+    /* Corner decorations */
+    .corner { position: fixed; width: 24px; height: 24px; }
+    .corner-tl { top: 20px; left: 20px; border-top: 2px solid rgba(0,245,212,0.5); border-left: 2px solid rgba(0,245,212,0.5); }
+    .corner-tr { top: 20px; right: 20px; border-top: 2px solid rgba(0,245,212,0.5); border-right: 2px solid rgba(0,245,212,0.5); }
+    .corner-bl { bottom: 20px; left: 20px; border-bottom: 2px solid rgba(0,245,212,0.5); border-left: 2px solid rgba(0,245,212,0.5); }
+    .corner-br { bottom: 20px; right: 20px; border-bottom: 2px solid rgba(0,245,212,0.5); border-right: 2px solid rgba(0,245,212,0.5); }
+
+    /* Main container */
+    .loading-root {
+      position: relative; z-index: 10;
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0;
+    }
+
+    /* Hexagon logo animation */
+    .logo-hex-wrap {
+      position: relative;
+      width: 120px; height: 120px;
+      margin-bottom: 32px;
+    }
+    .logo-hex-bg {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(0,245,212,0.2);
+      animation: hexSpin 8s linear infinite;
+    }
+    @keyframes hexSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .logo-hex-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      color: var(--neon-cyan);
+      filter: drop-shadow(0 0 20px var(--neon-cyan));
+      animation: hexPulse 2s ease-in-out infinite;
+    }
+    @keyframes hexPulse {
+      0%,100% { filter: drop-shadow(0 0 20px var(--neon-cyan)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 40px var(--neon-cyan)); transform: scale(1.05); }
+    }
+    /* Orbiting ring */
+    .logo-ring {
+      position: absolute; inset: -8px;
+      border: 1px solid transparent;
+      border-top-color: var(--neon-cyan);
+      border-radius: 50%;
+      animation: ringOrbit 1.5s linear infinite;
+    }
+    .logo-ring-2 {
+      position: absolute; inset: -20px;
+      border: 1px solid transparent;
+      border-bottom-color: rgba(247,0,255,0.6);
+      border-radius: 50%;
+      animation: ringOrbit 3s linear infinite reverse;
+    }
+    @keyframes ringOrbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Brand */
+    .loading-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .loading-brand em {
+      font-style: normal;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 20px var(--neon-cyan);
+    }
+    .loading-tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 56px;
+    }
+
+    /* Progress bar */
+    .loading-progress-wrap {
+      width: 320px;
+      margin-bottom: 20px;
+    }
+    .loading-progress-track {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+    .loading-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+      border-radius: 99px;
+      transition: width 0.3s ease;
+      position: relative;
+    }
+    .loading-progress-fill::after {
+      content: '';
+      position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 6px; height: 6px;
+      background: var(--neon-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-cyan);
+    }
+    .loading-progress-shimmer {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .loading-pct {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--neon-cyan);
+      text-align: right;
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Status text */
+    .loading-status {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      height: 20px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .loading-status .cursor {
+      display: inline-block;
+      width: 8px; height: 1em;
+      background: var(--neon-cyan);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Checklist */
+    .loading-checklist {
+      display: flex; flex-direction: column; gap: 10px;
+      width: 320px;
+    }
+    .loading-check {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.4s ease;
+      letter-spacing: 0.05em;
+    }
+    .loading-check.visible { opacity: 1; transform: translateX(0); }
+    .loading-check.done { color: var(--neon-cyan); }
+    .loading-check.done .check-icon { color: var(--neon-cyan); }
+    .loading-check.error { color: #ff2d55; }
+    .check-icon {
+      width: 16px; height: 16px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid currentColor;
+      border-radius: 3px;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+    .check-spinner {
+      width: 16px; height: 16px;
+      border: 1px solid rgba(0,245,212,0.3);
+      border-top-color: var(--neon-cyan);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Version info */
+    .loading-version {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(148,163,184,0.3);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    /* Scan line */
+    .scan-line {
+      position: fixed; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,245,212,0.4), transparent);
+      animation: scan 4s linear infinite;
+      pointer-events: none;
+      z-index: 20;
+    }
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100vh; }
+    }
+
+    /* Fade out */
+    .loading-root.fade-out {
+      animation: fadeOut 0.6s ease forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; pointer-events: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+  <div class="particles" id="particles"></div>
+  <div class="scan-line"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="loading-root" id="loadingRoot">
+    <div class="logo-hex-wrap">
+      <div class="logo-ring"></div>
+      <div class="logo-ring-2"></div>
+      <div class="logo-hex-bg">⬡</div>
+      <div class="logo-hex-inner">⬡</div>
+    </div>
+
+    <div class="loading-brand">HACK<em>FORGE</em></div>
+    <div class="loading-tagline">COLLABORATIVE DEVELOPER WORKSPACE</div>
+
+    <div class="loading-progress-wrap">
+      <div class="loading-progress-track">
+        <div class="loading-progress-fill" id="progressFill">
+          <div class="loading-progress-shimmer"></div>
+        </div>
+      </div>
+      <div class="loading-pct" id="progressPct">0%</div>
+    </div>
+
+    <div class="loading-status" id="loadingStatus">
+      <span id="statusText">Initializing…</span>
+      <span class="cursor"></span>
+    </div>
+
+    <div class="loading-checklist" id="checklist">
+      <div class="loading-check" id="check-auth" data-label="Verifying authentication">
+        <div class="check-spinner"></div>
+        <span>Verifying authentication</span>
+      </div>
+      <div class="loading-check" id="check-ws" data-label="Connecting to workspace">
+        <div class="check-icon">○</div>
+        <span>Connecting to workspace</span>
+      </div>
+      <div class="loading-check" id="check-socket" data-label="Establishing realtime connection">
+        <div class="check-icon">○</div>
+        <span>Establishing realtime connection</span>
+      </div>
+      <div class="loading-check" id="check-team" data-label="Loading team data">
+        <div class="check-icon">○</div>
+        <span>Loading team data</span>
+      </div>
+      <div class="loading-check" id="check-projects" data-label="Fetching projects &amp; tasks">
+        <div class="check-icon">○</div>
+        <span>Fetching projects &amp; tasks</span>
+      </div>
+      <div class="loading-check" id="check-presence" data-label="Syncing presence">
+        <div class="check-icon">○</div>
+        <span>Syncing presence</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-version" id="loadingVersion">HACKFORGE v2.0.0 &nbsp;•&nbsp; <span id="loadEnv">PRODUCTION</span></div>
+
+  <script>
+    // Generate particles
+    const particlesEl = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const x = Math.random() * 100;
+      const dur = (Math.random() * 8 + 6) + 's';
+      const delay = -(Math.random() * 10) + 's';
+      const opacity = (Math.random() * 0.4 + 0.1).toFixed(2);
+      const drift = (Math.random() * 80 - 40) + 'px';
+      p.style.cssText = `left:${x}vw;--dur:${dur};--delay:${delay};--opacity:${opacity};--drift:${drift}`;
+      if (Math.random() > 0.7) { p.style.background = 'rgba(247,0,255,0.8)'; }
+      if (Math.random() > 0.85) { p.style.background = 'rgba(0,102,255,0.8)'; }
+      particlesEl.appendChild(p);
+    }
+
+    // Loading sequence
+    const steps = [
+      { id: 'check-auth',     label: 'Verifying authentication',      duration: 800,  pct: 15 },
+      { id: 'check-ws',       label: 'Connecting to workspace',        duration: 600,  pct: 30 },
+      { id: 'check-socket',   label: 'Establishing realtime link',     duration: 700,  pct: 50 },
+      { id: 'check-team',     label: 'Loading team data',              duration: 500,  pct: 65 },
+      { id: 'check-projects', label: 'Fetching projects & tasks',      duration: 600,  pct: 80 },
+      { id: 'check-presence', label: 'Syncing presence',               duration: 400,  pct: 95 },
+    ];
+
+    const progressFill = document.getElementById('progressFill');
+    const progressPct  = document.getElementById('progressPct');
+    const statusText   = document.getElementById('statusText');
+
+    function setProgress(pct) {
+      progressFill.style.width = pct + '%';
+      progressPct.textContent = pct + '%';
+    }
+
+    function setCheck(id, state) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('visible');
+      const icon = el.querySelector('.check-spinner, .check-icon');
+      if (state === 'running') {
+        icon.className = 'check-spinner';
+      } else if (state === 'done') {
+        el.classList.add('done');
+        icon.className = 'check-icon';
+        icon.textContent = '✓';
+      } else if (state === 'error') {
+        el.classList.add('error');
+        icon.className = 'check-icon';
+        icon.textContent = '✕';
+      }
+    }
+
+    async function runLoadingSequence() {
+      // Show first check immediately
+      setCheck('check-auth', 'running');
+      setProgress(5);
+
+      for (let i = 0; i < steps.length; i++) {
+        const step = steps[i];
+        statusText.textContent = step.label + '…';
+
+        await new Promise(r => setTimeout(r, step.duration));
+
+        // Mark current as done
+        setCheck(step.id, 'done');
+        setProgress(step.pct);
+
+        // Start next check
+        if (i + 1 < steps.length) {
+          setCheck(steps[i + 1].id, 'running');
+        }
+      }
+
+      // Finalize
+      statusText.textContent = 'Workspace ready!';
+      setProgress(100);
+
+      await new Promise(r => setTimeout(r, 500));
+
+      // Check for redirect target
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get('redirect') || '/dashboard';
+
+      // Fade out and redirect
+      document.getElementById('loadingRoot').classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = redirect;
+      }, 600);
+    }
+
+    // Check if we're truly loading (called by app.js in real use)
+    // For standalone, run sequence
+    if (!window.HF_LOADING_CONTROLLED) {
+      runLoadingSequence();
+    }
+
+    // Expose control API for app.js
+    window.HFLoader = {
+      setProgress,
+      setCheck,
+      setStatus: (msg) => { statusText.textContent = msg; },
+      complete: (redirect) => {
+        statusText.textContent = 'Workspace ready!';
+        setProgress(100);
+        setTimeout(() => {
+          document.getElementById('loadingRoot').classList.add('fade-out');
+          setTimeout(() => { window.location.href = redirect || '/dashboard'; }, 600);
+        }, 400);
+      },
+      error: (msg, checkId) => {
+        if (checkId) setCheck(checkId, 'error');
+        statusText.textContent = 'Error: ' + msg;
+        progressFill.style.background = 'linear-gradient(90deg, #ff2d55, #ff9500)';
+      }
+    };
+  </script>
+</body>
+</html>

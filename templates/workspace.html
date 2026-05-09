@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackForge — Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/theme.css" />
+  <link rel="stylesheet" href="/static/css/animations.css" />
+  <link rel="stylesheet" href="/static/css/editor.css" />
+  <link rel="stylesheet" href="/static/css/terminal.css" />
+  <link rel="stylesheet" href="/static/css/responsive.css" />
+  <link rel="stylesheet" href="/static/css/components/toast.css" />
+  <link rel="stylesheet" href="/static/css/components/buttons.css" />
+  <!-- Monaco Editor -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/editor/editor.main.min.css" />
+  <!-- xterm.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/xterm.min.css" />
+</head>
+<body class="hf-body workspace-body">
+
+  <!-- Ambient BG -->
+  <div class="hf-bg-grid"></div>
+  <div class="hf-bg-glow glow-1" style="top:0;left:60%"></div>
+
+  <!-- Toast Container -->
+  <div class="hf-toast-stack" id="toastStack"></div>
+
+  <!-- Command Palette -->
+  <div class="hf-cmd-overlay" id="cmdOverlay">
+    <div class="hf-cmd-palette" id="cmdPalette">
+      <div class="hf-cmd-header">
+        <span class="hf-cmd-icon">⌘</span>
+        <input type="text" class="hf-cmd-input" id="cmdInput" placeholder="Search commands, files, snippets…" autocomplete="off" />
+        <kbd class="hf-kbd">ESC</kbd>
+      </div>
+      <div class="hf-cmd-body" id="cmdResults"></div>
+      <div class="hf-cmd-footer">
+        <span><kbd>↑↓</kbd> Navigate</span><span><kbd>↵</kbd> Select</span><span><kbd>Esc</kbd> Close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workspace Layout -->
+  <div class="hf-workspace-root" id="workspaceRoot">
+
+    <!-- ===== TOP BAR ===== -->
+    <header class="hf-workspace-topbar" id="wsTopbar">
+      <div class="ws-topbar-left">
+        <a href="/dashboard" class="ws-brand">
+          <span class="brand-hex">⬡</span>
+          <span class="brand-name">HACK<em>FORGE</em></span>
+        </a>
+        <div class="ws-topbar-divider"></div>
+        <div class="ws-project-info" id="wsProjectInfo">
+          <span class="ws-project-name" id="wsProjectName">Loading…</span>
+          <span class="ws-branch-badge" id="wsBranch">
+            <span>⎇</span>
+            <span id="wsBranchName">main</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="ws-topbar-center">
+        <div class="ws-file-tabs" id="wsFileTabs">
+          <!-- file tabs injected here -->
+          <button class="ws-new-tab-btn" id="wsNewTabBtn" title="New File">+</button>
+        </div>
+      </div>
+
+      <div class="ws-topbar-right">
+        <div class="ws-collab-presence" id="wsCollabPresence">
+          <!-- live avatars injected -->
+        </div>
+        <button class="hf-btn hf-btn-ghost hf-btn-sm" id="wsShareBtn">
+          <span>⟡</span> Share
+        </button>
+        <button class="hf-btn hf-btn-primary hf-btn-sm" id="wsRunBtn">
+          <span>▶</span> Run
+        </button>
+        <button class="hf-topbar-btn" id="wsNotifBtn" title="Notifications">🔔</button>
+        <div class="ws-user-avatar-mini" id="wsUserAvatarMini"></div>
+      </div>
+    </header>
+
+    <!-- ===== WORKSPACE BODY ===== -->
+    <div class="hf-workspace-body" id="wsBody">
+
+      <!-- File Explorer Sidebar -->
+      <aside class="hf-file-explorer" id="fileExplorer">
+        <div class="hf-fe-header">
+          <span class="hf-fe-title">EXPLORER</span>
+          <div class="hf-fe-actions">
+            <button class="hf-fe-btn" id="feNewFileBtn" title="New File">+</button>
+            <button class="hf-fe-btn" id="feNewFolderBtn" title="New Folder">◻</button>
+            <button class="hf-fe-btn" id="feRefreshBtn" title="Refresh">↺</button>
+            <button class="hf-fe-btn" id="feCollapseBtn" title="Collapse">◁</button>
+          </div>
+        </div>
+        <div class="hf-fe-search">
+          <input type="text" class="hf-fe-search-input" id="feSearch" placeholder="Search files…" />
+        </div>
+        <div class="hf-fe-tree" id="feTree">
+          <!-- file tree injected by file-manager.js -->
+        </div>
+        <div class="hf-fe-footer">
+          <button class="hf-fe-footer-btn" id="feUploadBtn">↑ Upload File</button>
+        </div>
+      </aside>
+
+      <!-- Explorer Resize Handle -->
+      <div class="hf-resize-handle hf-resize-h" id="explorerResizeHandle"></div>
+
+      <!-- Center: Editor + Terminal -->
+      <div class="hf-editor-area" id="editorArea">
+
+        <!-- Editor Panel -->
+        <div class="hf-editor-panel" id="editorPanel">
+          <!-- Monaco Editor Mount -->
+          <div class="hf-monaco-container" id="monacoContainer">
+            <div class="hf-editor-placeholder" id="editorPlaceholder">
+              <span class="placeholder-hex">⬡</span>
+              <h3>Open a file to start coding</h3>
+              <p>Use the file explorer on the left, or press <kbd>Ctrl+P</kbd> to quickly open a file</p>
+            </div>
+            <div id="monacoEditor" style="width:100%;height:100%;display:none"></div>
+          </div>
+          <!-- Live cursor layer -->
+          <div class="hf-live-cursors" id="liveCursors"></div>
+          <!-- Editor Status Bar -->
+          <div class="hf-editor-statusbar" id="editorStatusbar">
+            <div class="sb-left">
+              <span class="sb-item" id="sbBranch">⎇ main</span>
+              <span class="sb-item" id="sbErrors">0 errors</span>
+              <span class="sb-item" id="sbWarnings">0 warnings</span>
+            </div>
+            <div class="sb-right">
+              <span class="sb-item" id="sbLanguage">Plain Text</span>
+              <span class="sb-item" id="sbEncoding">UTF-8</span>
+              <span class="sb-item" id="sbPosition">Ln 1, Col 1</span>
+              <span class="sb-item" id="sbAutosave">✓ Saved</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal/Panel Resize Handle -->
+        <div class="hf-resize-handle hf-resize-v" id="terminalResizeHandle"></div>
+
+        <!-- Terminal Panel -->
+        <div class="hf-terminal-panel" id="terminalPanel">
+          <div class="hf-terminal-header">
+            <div class="hf-terminal-tabs" id="terminalTabs">
+              <button class="term-tab active" data-tab="terminal">TERMINAL</button>
+              <button class="term-tab" data-tab="output">OUTPUT</button>
+              <button class="term-tab" data-tab="problems">PROBLEMS</button>
+              <button class="term-tab" data-tab="debug">DEBUG</button>
+              <button class="term-tab" data-tab="sandbox">SANDBOX</button>
+            </div>
+            <div class="hf-terminal-actions">
+              <button class="term-action-btn" id="termNewBtn" title="New Terminal">+</button>
+              <button class="term-action-btn" id="termSplitBtn" title="Split Terminal">⊕</button>
+              <button class="term-action-btn" id="termClearBtn" title="Clear">🗑</button>
+              <button class="term-action-btn" id="termMinBtn" title="Toggle">▲</button>
+            </div>
+          </div>
+
+          <!-- Terminal Pane -->
+          <div class="hf-term-pane active" id="termPane-terminal">
+            <div id="xtermContainer" style="width:100%;height:100%"></div>
+          </div>
+
+          <!-- Output Pane -->
+          <div class="hf-term-pane" id="termPane-output">
+            <div class="hf-output-log" id="outputLog">
+              <div class="output-placeholder">No output yet. Run your code to see output here.</div>
+            </div>
+          </div>
+
+          <!-- Problems Pane -->
+          <div class="hf-term-pane" id="termPane-problems">
+            <div class="hf-problems-list" id="problemsList">
+              <div class="problems-placeholder">No problems detected.</div>
+            </div>
+          </div>
+
+          <!-- Debug Pane -->
+          <div class="hf-term-pane" id="termPane-debug">
+            <div class="hf-debug-panel" id="debugPanel">
+              <div class="debug-placeholder">Start a debug session to see variables and call stack.</div>
+            </div>
+          </div>
+
+          <!-- Sandbox Pane -->
+          <div class="hf-term-pane" id="termPane-sandbox">
+            <div class="hf-sandbox-toolbar">
+              <button class="hf-btn hf-btn-primary hf-btn-sm" id="sandboxRunBtn">▶ Run in Sandbox</button>
+              <button class="hf-btn hf-btn-ghost hf-btn-sm" id="sandboxRefreshBtn">↺ Refresh</button>
+              <span class="hf-sandbox-lang" id="sandboxLangBadge">HTML/CSS/JS</span>
+            </div>
+            <iframe class="hf-sandbox-frame" id="sandboxFrame" sandbox="allow-scripts allow-same-origin" title="Code Sandbox"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar: AI + Collab -->
+      <div class="hf-ws-right-sidebar" id="wsRightSidebar">
+        <div class="hf-wrs-tabs" id="wrsTabs">
+          <button class="wrs-tab active" data-panel="ai">AI</button>
+          <button class="wrs-tab" data-panel="collab">Collab</button>
+          <button class="wrs-tab" data-panel="git">Git</button>
+          <button class="wrs-tab" data-panel="search">Search</button>
+        </div>
+
+        <!-- AI Panel -->
+        <div class="hf-wrs-panel active" id="wrsPanel-ai">
+          <div class="wrs-ai-header">
+            <span class="ai-glow">◈ AI Copilot</span>
+          </div>
+          <div class="wrs-ai-quick-actions">
+            <button class="wrs-qa-btn" data-action="explain">Explain Code</button>
+            <button class="wrs-qa-btn" data-action="review">Review</button>
+            <button class="wrs-qa-btn" data-action="fix">Fix Bugs</button>
+            <button class="wrs-qa-btn" data-action="optimize">Optimize</button>
+            <button class="wrs-qa-btn" data-action="document">Add Docs</button>
+            <button class="wrs-qa-btn" data-action="tests">Write Tests</button>
+          </div>
+          <div class="wrs-ai-messages" id="wrsAiMessages"></div>
+          <div class="wrs-ai-input-wrap">
+            <textarea class="wrs-ai-textarea" id="wrsAiInput" placeholder="Ask about your code…" rows="2"></textarea>
+            <button class="hf-btn hf-btn-ai hf-btn-sm" id="wrsAiSend">↑</button>
+          </div>
+        </div>
+
+        <!-- Collab Panel -->
+        <div class="hf-wrs-panel" id="wrsPanel-collab">
+          <div class="wrs-collab-header">Live Collaborators</div>
+          <div class="wrs-collab-list" id="wrsCollabList"></div>
+          <hr class="wrs-divider" />
+          <div class="wrs-collab-header">Cursor Positions</div>
+          <div class="wrs-cursor-list" id="wrsCursorList"></div>
+          <hr class="wrs-divider" />
+          <div class="wrs-collab-header">Comments</div>
+          <div class="wrs-comments-list" id="wrsCommentsList"></div>
+          <button class="hf-btn hf-btn-ghost hf-btn-sm" id="addCommentBtn" style="margin-top:8px">+ Add Comment</button>
+        </div>
+
+        <!-- Git Panel -->
+        <div class="hf-wrs-panel" id="wrsPanel-git">
+          <div class="wrs-git-header">
+            <span>Source Control</span>
+            <button class="hf-icon-btn" id="gitRefreshBtn">↺</button>
+          </div>
+          <div class="wrs-git-status" id="gitStatus">
+            <div class="git-section">
+              <div class="git-section-title">STAGED CHANGES</div>
+              <div class="git-files" id="gitStaged"></div>
+            </div>
+            <div class="git-section">
+              <div class="git-section-title">CHANGES</div>
+              <div class="git-files" id="gitUnstaged"></div>
+            </div>
+          </div>
+          <div class="wrs-git-commit">
+            <textarea class="hf-textarea" id="gitCommitMsg" placeholder="Commit message…" rows="2"></textarea>
+            <button class="hf-btn hf-btn-primary hf-btn-sm" id="gitCommitBtn">✓ Commit</button>
+            <button class="hf-btn hf-btn-ghost hf-btn-sm" id="gitPushBtn">↑ Push</button>
+            <button class="hf-btn hf-btn-ghost hf-btn-sm" id="gitPullBtn">↓ Pull</button>
+          </div>
+        </div>
+
+        <!-- Search Panel -->
+        <div class="hf-wrs-panel" id="wrsPanel-search">
+          <div class="wrs-search-wrap">
+            <input type="text" class="hf-input" id="wrsSearchInput" placeholder="Search in files…" />
+            <input type="text" class="hf-input" id="wrsReplaceInput" placeholder="Replace with…" style="margin-top:6px" />
+            <div class="wrs-search-opts">
+              <label><input type="checkbox" id="wsSearchCase" /> Match Case</label>
+              <label><input type="checkbox" id="wsSearchRegex" /> Regex</label>
+              <label><input type="checkbox" id="wsSearchWord" /> Whole Word</label>
+            </div>
+            <button class="hf-btn hf-btn-primary hf-btn-sm" id="wrsSearchBtn" style="margin-top:8px">Search</button>
+          </div>
+          <div class="wrs-search-results" id="wrsSearchResults"></div>
+        </div>
+
+      </div><!-- /right sidebar -->
+    </div><!-- /ws-body -->
+
+  </div><!-- /workspace-root -->
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- New File Modal -->
+  <div class="hf-modal-overlay" id="newFileModalOverlay" style="display:none">
+    <div class="hf-modal hf-modal-sm">
+      <div class="hf-modal-header">
+        <span>New File</span>
+        <button class="hf-modal-close" id="closeNewFileModal">✕</button>
+      </div>
+      <div class="hf-modal-body">
+        <div class="hf-form-group">
+          <label>File Name</label>
+          <input type="text" class="hf-input" id="newFileNameInput" placeholder="e.g. main.py" />
+        </div>
+        <div class="hf-form-group">
+          <label>Language</label>
+          <select class="hf-select" id="newFileLangSelect">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+            <option value="sql">SQL</option>
+            <option value="markdown">Markdown</option>
+            <option value="json">JSON</option>
+            <option value="yaml">YAML</option>
+            <option value="text">Plain Text</option>
+          </select>
+        </div>
+      </div>
+      <div class="hf-modal-footer">
+        <button class="hf-btn hf-btn-ghost" id="cancelNewFileBtn">Cancel</button>
+        <button class="hf-btn hf-btn-primary" id="createNewFileBtn">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Run Code Modal -->
+  <div class="hf-modal-overlay" id="runModalOverlay" style="display:none">
+    <div class="hf-modal">
+      <div class="hf-modal-header">
+        <span>Run Code</span>
+        <button class="hf-modal-close" id="closeRunModal">✕</button>
+      </div>
+      <div class="hf-modal-body">
+        <div class="hf-form-group">
+          <label>Runtime</label>
+          <select class="hf-select" id="runtimeSelect">
+            <option value="python3">Python 3</option>
+            <option value="node">Node.js</option>
+            <option value="cpp">C++ (g++)</option>
+            <option value="java">Java</option>
+            <option value="bash">Bash</option>
+          </select>
+        </div>
+        <div class="hf-form-group">
+          <label>Stdin (optional)</label>
+          <textarea class="hf-textarea hf-mono" id="stdinInput" rows="4" placeholder="Provide stdin input…"></textarea>
+        </div>
+      </div>
+      <div class="hf-modal-footer">
+        <button class="hf-btn hf-btn-ghost" id="cancelRunBtn">Cancel</button>
+        <button class="hf-btn hf-btn-primary" id="confirmRunBtn">▶ Run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div class="hf-modal-overlay" id="shareModalOverlay" style="display:none">
+    <div class="hf-modal">
+      <div class="hf-modal-header">
+        <span>Share Workspace</span>
+        <button class="hf-modal-close" id="closeShareModal">✕</button>
+      </div>
+      <div class="hf-modal-body">
+        <div class="hf-form-group">
+          <label>Invite by Email</label>
+          <div class="hf-input-row">
+            <input type="email" class="hf-input" id="shareEmailInput" placeholder="teammate@example.com" />
+            <button class="hf-btn hf-btn-primary hf-btn-sm" id="shareInviteBtn">Invite</button>
+          </div>
+        </div>
+        <div class="hf-form-group">
+          <label>Join Code</label>
+          <div class="hf-input-row">
+            <input type="text" class="hf-input" id="joinCodeInput" readonly />
+            <button class="hf-btn hf-btn-ghost hf-btn-sm" id="copyJoinCodeBtn">Copy</button>
+          </div>
+        </div>
+        <div class="hf-collab-members-list" id="collabMembersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Review Result Modal -->
+  <div class="hf-modal-overlay" id="aiReviewModalOverlay" style="display:none">
+    <div class="hf-modal hf-modal-lg">
+      <div class="hf-modal-header">
+        <span class="ai-glow">◈ AI Code Review</span>
+        <button class="hf-modal-close" id="closeAiReviewModal">✕</button>
+      </div>
+      <div class="hf-modal-body" id="aiReviewBody">
+        <div class="ai-review-loading">
+          <span class="ai-dots"><span></span><span></span><span></span></span>
+          <span>Analyzing your code…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    // Monaco loader
+    var require = { paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/xterm.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/addon-fit/xterm-addon-fit.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/addon-web-links/xterm-addon-web-links.min.js"></script>
+  <script src="/static/js/modules/utils/constants.js"></script>
+  <script src="/static/js/modules/utils/helpers.js"></script>
+  <script src="/static/js/modules/utils/validators.js"></script>
+  <script src="/static/js/modules/utils/formatter.js"></script>
+  <script src="/static/js/modules/ui/modal.js"></script>
+  <script src="/static/js/modules/ui/dropdown.js"></script>
+  <script src="/static/js/modules/ui/tooltip.js"></script>
+  <script src="/static/js/modules/ui/context-menu.js"></script>
+  <script src="/static/js/toast.js"></script>
+  <script src="/static/js/state.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/socket.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/modules/realtime/cursors.js"></script>
+  <script src="/static/js/modules/realtime/collaboration.js"></script>
+  <script src="/static/js/modules/realtime/presence-sync.js"></script>
+  <script src="/static/js/modules/realtime/sync-engine.js"></script>
+  <script src="/static/js/modules/monaco/monaco-init.js"></script>
+  <script src="/static/js/modules/terminal/xterm-init.js"></script>
+  <script src="/static/js/modules/ai/ai-memory.js"></script>
+  <script src="/static/js/modules/ai/ai-reviewer.js"></script>
+  <script src="/static/js/modules/ai/ai-bugfinder.js"></script>
+  <script src="/static/js/modules/ai/ai-manager.js"></script>
+  <script src="/static/js/notifications.js"></script>
+  <script src="/static/js/command-palette.js"></script>
+  <script src="/static/js/theme-engine.js"></script>
+  <script src="/static/js/file-manager.js"></script>
+  <script src="/static/js/modules/uploads/upload-manager.js"></script>
+  <script src="/static/js/modules/uploads/chunk-upload.js"></script>
+  <script src="/static/js/uploader.js"></script>
+  <script src="/static/js/editor.js"></script>
+  <script src="/static/js/terminal.js"></script>
+  <script src="/static/js/presence.js"></script>
+  <script src="/static/js/ai-sidebar.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

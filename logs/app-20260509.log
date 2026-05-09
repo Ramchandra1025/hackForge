@@ -1,0 +1,111 @@
+[2026-05-09 00:00:46] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:00:48] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:00:52] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:09:16] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:09:17] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:09:21] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:14:34] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:14:35] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:14:39] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:16:59] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:17:01] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:17:05] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:37:20] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:37:21] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:37:26] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:39:00] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:39:01] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:39:05] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:40:00] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:40:01] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:40:05] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:41:07] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:41:08] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:41:12] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:44:27] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:44:28] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:44:32] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:47:13] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:47:14] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:47:18] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:48:00] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:48:01] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:48:05] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:54:20] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:54:21] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:54:25] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:56:29] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:56:30] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:56:34] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 00:56:50] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:56:53] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:58:00] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:58:01] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:58:01] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:58:01] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:58:21] backend.utils.error_handlers - ERROR - Unhandled exception: cannot access local variable 'user' where it is not associated with a value
+[2026-05-09 00:59:27] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 00:59:28] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 00:59:32] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:01:07] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:01:08] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:01:12] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:03:46] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:03:49] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:03:53] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:05:18] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:05:19] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:05:23] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:08:44] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:08:45] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:08:49] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:10:15] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:10:17] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:10:21] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:12:02] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:12:03] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:12:07] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:15:03] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:15:05] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:15:09] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 01:19:34] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 01:19:35] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 01:19:39] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:23:45] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:23:47] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:23:51] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:30:02] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:30:03] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:30:07] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:32:58] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:32:58] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:33:02] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:34:06] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:34:07] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:34:11] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:40:18] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:40:19] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:40:23] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:50:58] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:51:00] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:51:04] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:53:27] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:53:28] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:53:32] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 15:57:19] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 15:57:20] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 15:57:24] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 16:00:25] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 16:00:25] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 16:00:29] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 16:14:17] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-09 16:14:18] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 16:14:22] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 16:20:03] backend.services.supabase_service - INFO - Supabase service client initialized
+[2026-05-09 16:20:04] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 16:20:08] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 16:24:15] backend.services.supabase_service - INFO - Supabase service client initialized
+[2026-05-09 16:24:16] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-09 16:24:20] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-09 16:26:21] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-09 16:26:28] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column meetings.team_id does not exist'}

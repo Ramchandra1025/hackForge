@@ -1,0 +1,354 @@
+/* ============================================================
+   HackForge — Form Components
+   ============================================================ */
+
+/* ── Form Layout ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--sp-4);
+}
+
+.form-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.form-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-family: var(--font-ui);
+}
+
+.form-error {
+  font-size: var(--text-xs);
+  color: var(--status-error);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+}
+
+/* ── Input Base ── */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--sp-4);
+  background: var(--hf-surface-2);
+  border: 1px solid var(--hf-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: 500;
+  transition:
+    border-color var(--t-base),
+    box-shadow var(--t-base),
+    background var(--t-base);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder { color: var(--text-muted); }
+.input:hover { border-color: rgba(99,67,255,0.35); }
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 0 3px rgba(99,67,255,0.15), 0 0 16px rgba(99,67,255,0.1);
+  background: var(--hf-surface-3);
+}
+
+/* Error state */
+.input.error,
+.select.error,
+.textarea.error {
+  border-color: var(--status-error);
+  box-shadow: 0 0 0 3px rgba(255,45,120,0.15);
+}
+
+/* Success state */
+.input.success {
+  border-color: var(--status-success);
+  box-shadow: 0 0 0 3px rgba(0,255,148,0.1);
+}
+
+/* Disabled */
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Input Sizes ── */
+.input-sm  { height: 32px; padding: 0 var(--sp-3); font-size: var(--text-sm); }
+.input-lg  { height: 48px; padding: 0 var(--sp-5); font-size: var(--text-md); }
+
+/* ── Input with Icon ── */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .input { padding-left: 40px; }
+.input-wrapper .input-icon-left {
+  position: absolute;
+  left: var(--sp-3);
+  color: var(--text-muted);
+  pointer-events: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .input-icon-right {
+  position: absolute;
+  right: var(--sp-3);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  transition: color var(--t-base);
+}
+.input-wrapper .input-icon-right:hover { color: var(--text-primary); }
+.input-wrapper .input-with-right-icon { padding-right: 40px; }
+
+/* ── Textarea ── */
+.textarea {
+  height: auto;
+  min-height: 100px;
+  padding: var(--sp-3) var(--sp-4);
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ── Select ── */
+.select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235e5880' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+/* ── Checkbox / Radio ── */
+.checkbox-wrapper,
+.radio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input[type="checkbox"],
+.radio-wrapper input[type="radio"] {
+  display: none;
+}
+
+.custom-checkbox,
+.custom-radio {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--hf-border-glow);
+  border-radius: var(--radius-sm);
+  background: var(--hf-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-base);
+  flex-shrink: 0;
+}
+
+.custom-radio { border-radius: 50%; }
+
+input[type="checkbox"]:checked ~ .custom-checkbox,
+input[type="radio"]:checked ~ .custom-radio {
+  background: var(--neon-purple);
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 10px rgba(99,67,255,0.4);
+}
+
+.custom-checkbox::after {
+  content: '✓';
+  font-size: 11px;
+  color: white;
+  opacity: 0;
+  transition: opacity var(--t-base);
+}
+input[type="checkbox"]:checked ~ .custom-checkbox::after { opacity: 1; }
+
+.custom-radio::after {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transition: opacity var(--t-base);
+}
+input[type="radio"]:checked ~ .custom-radio::after { opacity: 1; }
+
+/* ── Toggle Switch ── */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle input { display: none; }
+
+.toggle-track {
+  width: 40px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--hf-surface-3);
+  border: 1px solid var(--hf-border);
+  position: relative;
+  transition: all var(--t-base);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all var(--t-base);
+}
+
+.toggle input:checked ~ .toggle-track {
+  background: rgba(99,67,255,0.3);
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 12px rgba(99,67,255,0.3);
+}
+.toggle input:checked ~ .toggle-track .toggle-thumb {
+  left: 20px;
+  background: var(--neon-purple);
+}
+
+.toggle-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-weight: 500;
+}
+
+/* ── Range Slider ── */
+.range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--hf-surface-3);
+  outline: none;
+}
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--neon-purple);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(99,67,255,0.5);
+}
+
+/* ── Search Input ── */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-input {
+  padding-left: 40px;
+  padding-right: 36px;
+  background: var(--hf-surface-2);
+  border: 1px solid var(--hf-border);
+}
+.search-input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.1); }
+
+/* ── Tag Input ── */
+.tag-input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--hf-surface-2);
+  border: 1px solid var(--hf-border);
+  border-radius: var(--radius-md);
+  min-height: 40px;
+  cursor: text;
+  transition: border-color var(--t-base), box-shadow var(--t-base);
+}
+.tag-input-wrapper:focus-within {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 0 3px rgba(99,67,255,0.15);
+}
+.tag-input-wrapper .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: rgba(99,67,255,0.2);
+  border: 1px solid rgba(99,67,255,0.4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--neon-purple-2);
+}
+.tag-input-wrapper .tag-remove {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.tag-input-wrapper .tag-remove:hover { opacity: 1; }
+.tag-input-wrapper input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  flex: 1;
+  min-width: 80px;
+}
+
+/* ── OTP Input ── */
+.otp-wrapper {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+}
+.otp-input {
+  width: 52px !important;
+  height: 60px !important;
+  text-align: center;
+  font-size: var(--text-2xl);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0;
+  caret-color: var(--neon-purple);
+}
+.otp-input:focus {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 16px rgba(99,67,255,0.4);
+}

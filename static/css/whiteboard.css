@@ -1,0 +1,167 @@
+/* Whiteboard Styles */
+
+.hf-whiteboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+}
+
+.hf-whiteboard-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(15, 15, 30, 0.8);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  overflow-x: auto;
+}
+
+.hf-whiteboard-tool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 6px;
+  background: transparent;
+  color: #0ff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hf-whiteboard-tool:hover,
+.hf-whiteboard-tool.active {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: #0ff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.hf-whiteboard-color-picker {
+  display: flex;
+  gap: 4px;
+  padding: 0 8px;
+  border-right: 1px solid rgba(0, 255, 255, 0.2);
+  border-left: 1px solid rgba(0, 255, 255, 0.2);
+  margin: 0 8px;
+}
+
+.hf-color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.hf-color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.hf-color-swatch.active {
+  border-color: #0ff;
+}
+
+.hf-whiteboard-canvas {
+  flex: 1;
+  touch-action: none;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(255, 0, 255, 0.05) 100%);
+  cursor: crosshair;
+}
+
+.hf-whiteboard-participants {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  margin-left: auto;
+}
+
+.hf-participant-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ff, #f0f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  border: 2px solid rgba(0, 255, 255, 0.3);
+}
+
+.hf-whiteboard-size-slider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 8px;
+}
+
+.hf-whiteboard-size-slider input {
+  width: 80px;
+}
+
+.hf-whiteboard-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #0ff;
+}
+
+.hf-whiteboard-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Drawing styles */
+.hf-drawing-line {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hf-drawing-shape {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hf-whiteboard-toolbar {
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .hf-whiteboard-tool {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hf-whiteboard-participants {
+    display: none;
+  }
+}

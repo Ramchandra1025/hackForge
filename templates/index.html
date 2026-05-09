@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HackForge Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/main.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- ── LOADING SCREEN ──────────────────────────────── -->
+<div id="loading-screen">
+  <div class="loader-core">
+    <div class="forge-logo-anim">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <polygon class="hex" points="32,4 58,18 58,46 32,60 6,46 6,18" stroke="var(--neon-cyan)" stroke-width="2" fill="none"/>
+        <polygon class="hex-inner" points="32,12 52,23 52,41 32,52 12,41 12,23" stroke="var(--neon-purple)" stroke-width="1" fill="none" opacity="0.5"/>
+        <path class="bolt" d="M28 18L20 34h12L24 46l20-20H28L36 10z" fill="var(--neon-cyan)" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="loader-brand">HACKFORGE</div>
+    <div class="loader-subtitle">Initializing workspace...</div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
+  </div>
+</div>
+
+<!-- ── AUTH SCREENS ────────────────────────────────── -->
+<div id="auth-screen" class="hidden">
+  <div class="auth-bg">
+    <div class="auth-grid"></div>
+    <div class="auth-glow"></div>
+  </div>
+  <div class="auth-container">
+    <div class="auth-brand">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
+        <polygon points="32,4 58,18 58,46 32,60 6,46 6,18" stroke="var(--neon-cyan)" stroke-width="2" fill="none"/>
+        <path d="M28 18L20 34h12L24 46l20-20H28L36 10z" fill="var(--neon-cyan)"/>
+      </svg>
+      <span>HACKFORGE</span>
+    </div>
+
+    <!-- Login Panel -->
+    <div id="login-panel" class="auth-panel glass-panel">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-sub">Enter your credentials to access workspace</p>
+      <div class="form-group">
+        <label>Email or Username</label>
+        <input type="text" id="login-identifier" class="neon-input" placeholder="you@example.com" autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-row">
+          <input type="password" id="login-password" class="neon-input" placeholder="••••••••" autocomplete="current-password" />
+          <button class="eye-btn" onclick="togglePassword('login-password')"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn-primary full-width" onclick="authLogin()">
+        <span>Sign In</span><i class="fas fa-arrow-right"></i>
+      </button>
+      <div class="auth-links">
+        <a onclick="showPanel('forgot-panel')">Forgot password?</a>
+        <span>·</span>
+        <a onclick="showPanel('signup-panel')">Create account</a>
+      </div>
+      <div id="login-error" class="auth-error hidden"></div>
+    </div>
+
+    <!-- Signup Panel -->
+    <div id="signup-panel" class="auth-panel glass-panel hidden">
+      <h2 class="auth-title">Create account</h2>
+      <p class="auth-sub">Join HackForge and build something legendary</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Display Name</label>
+          <input type="text" id="signup-displayname" class="neon-input" placeholder="Your Name" />
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="signup-username" class="neon-input" placeholder="hacksmith" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signup-email" class="neon-input" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password <span class="hint">(4-20 chars)</span></label>
+        <div class="input-row">
+          <input type="password" id="signup-password" class="neon-input" placeholder="Min 4 characters" />
+          <button class="eye-btn" onclick="togglePassword('signup-password')"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn-primary full-width" onclick="authSignup()">
+        <span>Send Verification Code</span><i class="fas fa-envelope"></i>
+      </button>
+      <div class="auth-links">
+        <a onclick="showPanel('login-panel')">Already have an account?</a>
+      </div>
+      <div id="signup-error" class="auth-error hidden"></div>
+    </div>
+
+    <!-- OTP Panel -->
+    <div id="otp-panel" class="auth-panel glass-panel hidden">
+      <h2 class="auth-title">Verify Email</h2>
+      <p class="auth-sub">Enter the 6-digit code sent to <strong id="otp-email-display"></strong></p>
+      <div id="otp-dev-display" class="auth-note hidden"></div>
+      <div class="otp-inputs">
+        <input type="text" maxlength="1" class="otp-digit" id="otp0" oninput="otpMove(0)" />
+        <input type="text" maxlength="1" class="otp-digit" id="otp1" oninput="otpMove(1)" />
+        <input type="text" maxlength="1" class="otp-digit" id="otp2" oninput="otpMove(2)" />
+        <input type="text" maxlength="1" class="otp-digit" id="otp3" oninput="otpMove(3)" />
+        <input type="text" maxlength="1" class="otp-digit" id="otp4" oninput="otpMove(4)" />
+        <input type="text" maxlength="1" class="otp-digit" id="otp5" oninput="otpMove(5)" />
+      </div>
+      <button class="btn-primary full-width" onclick="authVerifyOTP()">
+        <span>Verify Code</span><i class="fas fa-check"></i>
+      </button>
+      <div class="auth-links">
+        <a onclick="resendOTP()">Resend code</a>
+        <span>·</span>
+        <a onclick="showPanel('signup-panel')">Go back</a>
+      </div>
+      <div id="otp-error" class="auth-error hidden"></div>
+    </div>
+
+    <!-- Forgot Panel -->
+    <div id="forgot-panel" class="auth-panel glass-panel hidden">
+      <h2 class="auth-title">Reset Password</h2>
+      <p class="auth-sub">Enter your email to receive a reset code</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="forgot-email" class="neon-input" placeholder="you@example.com" />
+      </div>
+      <button class="btn-primary full-width" onclick="authForgot()">
+        <span>Send Reset Code</span><i class="fas fa-key"></i>
+      </button>
+      <div class="auth-links">
+        <a onclick="showPanel('login-panel')">Back to login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN APP ────────────────────────────────────── -->
+<div id="app" class="hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+          <polygon points="32,4 58,18 58,46 32,60 6,46 6,18" stroke="var(--neon-cyan)" stroke-width="2" fill="none"/>
+          <path d="M28 18L20 34h12L24 46l20-20H28L36 10z" fill="var(--neon-cyan)"/>
+        </svg>
+        <span class="sidebar-brand">HackForge</span>
+      </div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector" onclick="showTeamPicker()">
+      <div class="team-avatar" id="sidebar-team-avatar">HF</div>
+      <div class="team-info">
+        <div class="team-name" id="sidebar-team-name">Select Team</div>
+        <div class="team-role" id="sidebar-team-role">—</div>
+      </div>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Nav -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Workspace</div>
+      <a class="nav-item active" onclick="navigate('dashboard')" data-page="dashboard">
+        <i class="fas fa-th-large"></i><span>Dashboard</span>
+      </a>
+      <a class="nav-item" onclick="navigate('tasks')" data-page="tasks">
+        <i class="fas fa-tasks"></i><span>Tasks</span>
+        <span class="nav-badge" id="badge-tasks"></span>
+      </a>
+      <a class="nav-item" onclick="navigate('editor')" data-page="editor">
+        <i class="fas fa-code"></i><span>Code Editor</span>
+      </a>
+      <a class="nav-item" onclick="navigate('terminal')" data-page="terminal">
+        <i class="fas fa-terminal"></i><span>Terminal</span>
+      </a>
+      <a class="nav-item" onclick="navigate('whiteboard')" data-page="whiteboard">
+        <i class="fas fa-draw-polygon"></i><span>Whiteboard</span>
+      </a>
+
+      <div class="nav-section-label">Communicate</div>
+      <a class="nav-item" onclick="navigate('chat')" data-page="chat">
+        <i class="fas fa-comments"></i><span>Chat</span>
+        <span class="nav-badge" id="badge-chat"></span>
+      </a>
+      <a class="nav-item" onclick="navigate('meetings')" data-page="meetings">
+        <i class="fas fa-video"></i><span>Meetings</span>
+      </a>
+      <a class="nav-item" onclick="navigate('wiki')" data-page="wiki">
+        <i class="fas fa-book"></i><span>Wiki / Docs</span>
+      </a>
+
+      <div class="nav-section-label">Resources</div>
+      <a class="nav-item" onclick="navigate('files')" data-page="files">
+        <i class="fas fa-folder"></i><span>Files</span>
+      </a>
+      <a class="nav-item" onclick="navigate('deployments')" data-page="deployments">
+        <i class="fas fa-rocket"></i><span>Deployments</span>
+      </a>
+      <a class="nav-item" onclick="navigate('analytics')" data-page="analytics">
+        <i class="fas fa-chart-bar"></i><span>Analytics</span>
+      </a>
+
+      <div class="nav-section-label">AI</div>
+      <a class="nav-item" onclick="navigate('ai')" data-page="ai">
+        <i class="fas fa-brain"></i><span>AI Copilot</span>
+        <span class="nav-pill">Beta</span>
+      </a>
+
+      <div class="nav-section-label">Team</div>
+      <a class="nav-item" onclick="navigate('members')" data-page="members">
+        <i class="fas fa-users"></i><span>Members</span>
+      </a>
+      <a class="nav-item" onclick="navigate('settings')" data-page="settings">
+        <i class="fas fa-cog"></i><span>Settings</span>
+      </a>
+    </nav>
+
+    <!-- User card -->
+    <div class="sidebar-user">
+      <div class="user-presence online"></div>
+      <img class="user-avatar-sm" id="sidebar-user-avatar" src="https://api.dicebear.com/7.x/identicon/svg?seed=hackforge" alt="avatar" />
+      <div class="user-meta">
+        <div class="user-name" id="sidebar-username">Loading...</div>
+        <div class="user-status">Online</div>
+      </div>
+      <button class="icon-btn" onclick="showProfileModal()"><i class="fas fa-user-edit"></i></button>
+      <button class="icon-btn danger" onclick="authLogout()"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main id="main-content">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="breadcrumb" id="breadcrumb">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <button class="cmd-palette-btn" onclick="showCommandPalette()">
+          <i class="fas fa-search"></i>
+          <span>Search or type a command...</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <button class="icon-btn" onclick="navigate('notifications')" title="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="dot-badge" id="notif-dot" style="display:none"></span>
+        </button>
+        <button class="icon-btn" onclick="showCreateModal()" title="Create">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Views -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <div class="page-actions">
+          <button class="btn-secondary" onclick="showCreateTeamModal()"><i class="fas fa-plus"></i> New Team</button>
+          <button class="btn-primary" onclick="showCreateProjectModal()"><i class="fas fa-rocket"></i> New Project</button>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <!-- Stats row -->
+        <div class="stats-row" id="dashboard-stats">
+          <div class="stat-card glass-panel">
+            <div class="stat-icon cyan"><i class="fas fa-tasks"></i></div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-tasks">0</div>
+              <div class="stat-label">Open Tasks</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel">
+            <div class="stat-icon purple"><i class="fas fa-project-diagram"></i></div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-projects">0</div>
+              <div class="stat-label">Projects</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel">
+            <div class="stat-icon orange"><i class="fas fa-users"></i></div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-members">0</div>
+              <div class="stat-label">Team Members</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel">
+            <div class="stat-icon green"><i class="fas fa-hdd"></i></div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-storage">0 MB</div>
+              <div class="stat-label">Storage Used</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects + Activity -->
+        <div class="dash-row">
+          <div class="glass-panel projects-panel">
+            <div class="panel-header">
+              <h3>Projects</h3>
+              <button class="btn-ghost sm" onclick="showCreateProjectModal()"><i class="fas fa-plus"></i></button>
+            </div>
+            <div id="projects-list" class="projects-list">
+              <div class="empty-state">
+                <i class="fas fa-rocket"></i>
+                <p>No projects yet. Create your first project.</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass-panel activity-panel">
+            <div class="panel-header"><h3>Activity Feed</h3></div>
+            <div id="activity-feed" class="activity-feed">
+              <div class="skeleton-list">
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Tasks snapshot -->
+        <div class="glass-panel my-tasks-panel">
+          <div class="panel-header">
+            <h3>My Tasks</h3>
+            <button class="btn-ghost sm" onclick="navigate('tasks')">View All</button>
+          </div>
+          <div id="my-tasks-list" class="my-tasks-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASKS PAGE -->
+    <div id="page-tasks" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Kanban Board</h1>
+        <div class="page-actions">
+          <select id="task-project-select" class="neon-select" onchange="loadTasks()">
+            <option value="">All Projects</option>
+          </select>
+          <button class="btn-primary" onclick="showCreateTaskModal()"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+      </div>
+      <div class="kanban-board" id="kanban-board">
+        <div class="kanban-col" id="col-todo" data-status="todo">
+          <div class="col-header"><span class="col-dot todo"></span>To Do <span class="col-count" id="count-todo">0</span></div>
+          <div class="col-body" id="tasks-todo" ondragover="dragOver(event)" ondrop="dropTask(event,'todo')"></div>
+          <button class="add-task-btn" onclick="showCreateTaskModal('todo')"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div class="kanban-col" id="col-in_progress" data-status="in_progress">
+          <div class="col-header"><span class="col-dot in-progress"></span>In Progress <span class="col-count" id="count-in_progress">0</span></div>
+          <div class="col-body" id="tasks-in_progress" ondragover="dragOver(event)" ondrop="dropTask(event,'in_progress')"></div>
+          <button class="add-task-btn" onclick="showCreateTaskModal('in_progress')"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div class="kanban-col" id="col-review" data-status="review">
+          <div class="col-header"><span class="col-dot review"></span>Review <span class="col-count" id="count-review">0</span></div>
+          <div class="col-body" id="tasks-review" ondragover="dragOver(event)" ondrop="dropTask(event,'review')"></div>
+          <button class="add-task-btn" onclick="showCreateTaskModal('review')"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div class="kanban-col" id="col-done" data-status="done">
+          <div class="col-header"><span class="col-dot done"></span>Done <span class="col-count" id="count-done">0</span></div>
+          <div class="col-body" id="tasks-done" ondragover="dragOver(event)" ondrop="dropTask(event,'done')"></div>
+          <button class="add-task-btn" onclick="showCreateTaskModal('done')"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR PAGE -->
+    <div id="page-editor" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Code Editor</h1>
+        <div class="page-actions">
+          <select id="editor-lang" class="neon-select" onchange="setEditorLanguage()">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="json">JSON</option>
+            <option value="typescript">TypeScript</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+          </select>
+          <button class="btn-secondary" onclick="formatCode()"><i class="fas fa-indent"></i> Format</button>
+          <button class="btn-primary" onclick="runCode()"><i class="fas fa-play"></i> Run</button>
+        </div>
+      </div>
+      <div class="editor-workspace">
+        <div class="editor-sidebar">
+          <div class="file-tree" id="file-tree">
+            <div class="tree-header">Files</div>
+            <div id="tree-list"></div>
+          </div>
+        </div>
+        <div class="editor-main">
+          <div id="monaco-container" style="width:100%;height:100%;min-height:500px;"></div>
+        </div>
+        <div class="editor-output" id="editor-output">
+          <div class="output-header">
+            <span>Output</span>
+            <button class="icon-btn sm" onclick="clearOutput()"><i class="fas fa-trash"></i></button>
+          </div>
+          <div id="output-content" class="output-content font-mono">Ready to run...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT PAGE -->
+    <div id="page-chat" class="page hidden">
+      <div class="chat-layout">
+        <div class="channels-panel glass-panel">
+          <div class="channels-header">
+            <h3>Channels</h3>
+            <button class="icon-btn sm" onclick="showCreateChannelModal()"><i class="fas fa-plus"></i></button>
+          </div>
+          <div id="channels-list" class="channels-list"></div>
+          <div class="channels-header" style="margin-top:16px">
+            <h3>Direct Messages</h3>
+            <button class="icon-btn sm" onclick="showDMModal()"><i class="fas fa-plus"></i></button>
+          </div>
+          <div id="dm-list" class="channels-list"></div>
+        </div>
+        <div class="chat-main">
+          <div class="chat-topbar">
+            <div class="chat-channel-info">
+              <span class="channel-hash">#</span>
+              <span id="active-channel-name">general</span>
+            </div>
+            <div class="chat-actions">
+              <button class="icon-btn" title="Search messages"><i class="fas fa-search"></i></button>
+              <button class="icon-btn" title="Members"><i class="fas fa-users"></i></button>
+            </div>
+          </div>
+          <div id="chat-messages" class="chat-messages"></div>
+          <div class="chat-input-area">
+            <div class="chat-input-box">
+              <button class="icon-btn" onclick="triggerFileUpload()"><i class="fas fa-paperclip"></i></button>
+              <div id="chat-input" class="chat-input" contenteditable="true" 
+                   placeholder="Message #general..." 
+                   onkeydown="chatKeydown(event)"></div>
+              <button class="icon-btn" onclick="toggleEmojiPicker()"><i class="fas fa-smile"></i></button>
+              <button class="icon-btn cyan" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILES PAGE -->
+    <div id="page-files" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">File Manager</h1>
+        <div class="page-actions">
+          <button class="btn-secondary" onclick="showCreateFolderModal()"><i class="fas fa-folder-plus"></i> New Folder</button>
+          <button class="btn-primary" onclick="showUploadModal()"><i class="fas fa-upload"></i> Upload Files</button>
+        </div>
+      </div>
+      <div class="files-layout">
+        <div class="files-sidebar glass-panel">
+          <div class="files-breadcrumb" id="files-breadcrumb">
+            <span onclick="navigateFiles(null)">Root</span>
+          </div>
+          <div id="folder-tree" class="folder-tree"></div>
+        </div>
+        <div class="files-main">
+          <div class="files-toolbar">
+            <div class="view-toggle">
+              <button class="icon-btn active" onclick="setFileView('grid')" id="view-grid"><i class="fas fa-th"></i></button>
+              <button class="icon-btn" onclick="setFileView('list')" id="view-list"><i class="fas fa-list"></i></button>
+            </div>
+            <input type="text" class="neon-input sm" placeholder="Search files..." oninput="searchFiles(this.value)" />
+          </div>
+          <div id="files-drop-zone" class="drop-zone" ondragover="fileDragOver(event)" ondragleave="fileDragLeave(event)" ondrop="fileDropped(event)">
+            <div id="drop-overlay" class="drop-overlay hidden">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Drop files to upload</p>
+            </div>
+            <div id="files-grid" class="files-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI PAGE -->
+    <div id="page-ai" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">AI Copilot</h1>
+        <div class="page-actions">
+          <select class="neon-select" id="ai-mode-select">
+            <option value="assistant">General Assistant</option>
+            <option value="code">Code Reviewer</option>
+            <option value="planner">Sprint Planner</option>
+            <option value="readme">README Generator</option>
+            <option value="bug">Bug Finder</option>
+          </select>
+          <button class="btn-secondary" onclick="clearAIChat()"><i class="fas fa-trash"></i> Clear</button>
+        </div>
+      </div>
+      <div class="ai-layout">
+        <div class="ai-chat glass-panel">
+          <div id="ai-messages" class="ai-messages">
+            <div class="ai-welcome">
+              <div class="ai-avatar-large"><i class="fas fa-brain"></i></div>
+              <h3>HackForge AI Copilot</h3>
+              <p>Powered by Google Gemini. Ask me anything about your project, code, tasks, or let me help plan your sprint.</p>
+              <div class="ai-suggestions">
+                <button onclick="aiPrompt('Review my latest code changes')">Review code</button>
+                <button onclick="aiPrompt('Plan the next sprint')">Plan sprint</button>
+                <button onclick="aiPrompt('Find bugs in my code')">Find bugs</button>
+                <button onclick="aiPrompt('Generate README for this project')">Generate README</button>
+              </div>
+            </div>
+          </div>
+          <div class="ai-input-area">
+            <div class="ai-input-box">
+              <textarea id="ai-input" class="ai-input" placeholder="Ask AI anything..." rows="1" onkeydown="aiKeydown(event)" oninput="autoResize(this)"></textarea>
+              <button class="btn-primary" onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="ai-sidebar glass-panel">
+          <h3 class="sidebar-sec-title">AI Agents</h3>
+          <div class="agent-card" onclick="aiPrompt('Assign tasks to team members based on skills')">
+            <i class="fas fa-user-check"></i>
+            <div><strong>Task Assigner</strong><p>Auto-assign tasks by skill</p></div>
+          </div>
+          <div class="agent-card" onclick="aiPrompt('Generate a full sprint plan for this week')">
+            <i class="fas fa-calendar-alt"></i>
+            <div><strong>Sprint Planner</strong><p>Optimize your sprint</p></div>
+          </div>
+          <div class="agent-card" onclick="aiPrompt('Predict deadlines based on current velocity')">
+            <i class="fas fa-clock"></i>
+            <div><strong>Deadline Predictor</strong><p>Forecast completion dates</p></div>
+          </div>
+          <div class="agent-card" onclick="aiPrompt('Generate a comprehensive README for this project')">
+            <i class="fas fa-file-alt"></i>
+            <div><strong>README Generator</strong><p>Auto-generate docs</p></div>
+          </div>
+          <h3 class="sidebar-sec-title" style="margin-top:20px">AI Memory</h3>
+          <div id="ai-memory-list" class="ai-memory-list">
+            <div class="empty-sm">No memories yet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMBERS PAGE -->
+    <div id="page-members" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Team Members</h1>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="showInviteModal()"><i class="fas fa-user-plus"></i> Invite Member</button>
+        </div>
+      </div>
+      <div id="members-grid" class="members-grid glass-panel"></div>
+    </div>
+
+    <!-- DEPLOYMENTS PAGE -->
+    <div id="page-deployments" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Deployments</h1>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="showDeployModal()"><i class="fas fa-rocket"></i> Deploy</button>
+        </div>
+      </div>
+      <div id="deployments-list" class="deployments-list"></div>
+    </div>
+
+    <!-- ANALYTICS PAGE -->
+    <div id="page-analytics" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Analytics</h1>
+      </div>
+      <div class="analytics-grid">
+        <div class="glass-panel chart-card">
+          <div class="panel-header"><h3>Task Completion (7 days)</h3></div>
+          <canvas id="chart-tasks" height="200"></canvas>
+        </div>
+        <div class="glass-panel chart-card">
+          <div class="panel-header"><h3>Activity by Member</h3></div>
+          <canvas id="chart-members" height="200"></canvas>
+        </div>
+        <div class="glass-panel chart-card">
+          <div class="panel-header"><h3>Storage Usage</h3></div>
+          <canvas id="chart-storage" height="200"></canvas>
+        </div>
+        <div class="glass-panel chart-card">
+          <div class="panel-header"><h3>Deployment History</h3></div>
+          <canvas id="chart-deployments" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="page-settings" class="page hidden">
+      <div class="page-header"><h1 class="page-title">Settings</h1></div>
+      <div class="settings-layout">
+        <div class="settings-nav glass-panel">
+          <a class="settings-link active" onclick="showSettingsTab('profile')">Profile</a>
+          <a class="settings-link" onclick="showSettingsTab('team')">Team</a>
+          <a class="settings-link" onclick="showSettingsTab('security')">Security</a>
+          <a class="settings-link" onclick="showSettingsTab('integrations')">Integrations</a>
+          <a class="settings-link" onclick="showSettingsTab('audit')">Audit Logs</a>
+        </div>
+        <div class="settings-content glass-panel">
+          <div id="settings-profile" class="settings-tab active">
+            <h2>Profile Settings</h2>
+            <div class="form-group">
+              <label>Display Name</label>
+              <input type="text" id="prf-displayname" class="neon-input" />
+            </div>
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea id="prf-bio" class="neon-input" rows="3" placeholder="Tell your team about yourself..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>GitHub URL</label>
+              <input type="text" id="prf-github" class="neon-input" placeholder="https://github.com/you" />
+            </div>
+            <div class="form-group">
+              <label>Portfolio URL</label>
+              <input type="text" id="prf-portfolio" class="neon-input" placeholder="https://yoursite.dev" />
+            </div>
+            <div class="form-group">
+              <label>Skills (comma-separated)</label>
+              <input type="text" id="prf-skills" class="neon-input" placeholder="React, Python, DevOps..." />
+            </div>
+            <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+          </div>
+          <div id="settings-team" class="settings-tab hidden">
+            <h2>Team Settings</h2>
+            <div class="form-group">
+              <label>Team Name</label>
+              <input type="text" id="team-name-input" class="neon-input" />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="team-desc-input" class="neon-input" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Join Code</label>
+              <div class="input-row">
+                <input type="text" id="team-joincode" class="neon-input" readonly />
+                <button class="btn-ghost" onclick="copyJoinCode()">Copy</button>
+              </div>
+            </div>
+            <button class="btn-primary" onclick="saveTeamSettings()">Save Team</button>
+          </div>
+          <div id="settings-security" class="settings-tab hidden">
+            <h2>Security</h2>
+            <h3>Change Password</h3>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="sec-current" class="neon-input" />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="sec-new" class="neon-input" />
+            </div>
+            <button class="btn-primary" onclick="changePassword()">Update Password</button>
+            <hr class="divider" style="margin:24px 0" />
+            <button class="btn-danger" onclick="logoutAllDevices()">Logout All Devices</button>
+          </div>
+          <div id="settings-integrations" class="settings-tab hidden">
+            <h2>Integrations</h2>
+            <div class="integration-card glass-panel">
+              <div class="int-icon"><i class="fab fa-github"></i></div>
+              <div class="int-info"><strong>GitHub</strong><p>Connect your repositories</p></div>
+              <button class="btn-secondary">Connect</button>
+            </div>
+            <div class="integration-card glass-panel">
+              <div class="int-icon"><i class="fas fa-cloud"></i></div>
+              <div class="int-info"><strong>Netlify</strong><p>Auto-deploy on push</p></div>
+              <button class="btn-secondary">Connect</button>
+            </div>
+            <div class="integration-card glass-panel">
+              <div class="int-icon"><i class="fas fa-train"></i></div>
+              <div class="int-info"><strong>Railway</strong><p>Backend deployments</p></div>
+              <button class="btn-secondary">Connect</button>
+            </div>
+          </div>
+          <div id="settings-audit" class="settings-tab hidden">
+            <h2>Audit Logs</h2>
+            <div id="audit-logs-list" class="audit-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WIKI PAGE -->
+    <div id="page-wiki" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Wiki / Docs</h1>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="showCreateWikiModal()"><i class="fas fa-plus"></i> New Page</button>
+        </div>
+      </div>
+      <div class="wiki-layout">
+        <div class="wiki-sidebar glass-panel">
+          <div class="panel-header"><h3>Pages</h3></div>
+          <div id="wiki-pages-list" class="wiki-pages-list"></div>
+        </div>
+        <div class="wiki-editor glass-panel">
+          <div id="wiki-editor-area">
+            <div class="empty-state">
+              <i class="fas fa-book-open"></i>
+              <p>Select a page or create a new one</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEETINGS PAGE -->
+    <div id="page-meetings" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Meetings</h1>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="startInstantMeeting()"><i class="fas fa-video"></i> Start Meeting</button>
+        </div>
+      </div>
+      <div id="meetings-grid" class="meetings-grid"></div>
+    </div>
+
+    <!-- WHITEBOARD PAGE -->
+    <div id="page-whiteboard" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Whiteboard</h1>
+        <div class="page-actions">
+          <button class="btn-secondary" onclick="clearCanvas()"><i class="fas fa-trash"></i> Clear</button>
+          <button class="btn-primary" onclick="saveCanvas()"><i class="fas fa-save"></i> Save</button>
+        </div>
+      </div>
+      <div class="whiteboard-wrapper">
+        <div class="whiteboard-tools">
+          <button class="tool-btn active" id="tool-pen" onclick="setTool('pen')" title="Pen"><i class="fas fa-pen"></i></button>
+          <button class="tool-btn" id="tool-eraser" onclick="setTool('eraser')" title="Eraser"><i class="fas fa-eraser"></i></button>
+          <button class="tool-btn" id="tool-line" onclick="setTool('line')" title="Line"><i class="fas fa-minus"></i></button>
+          <button class="tool-btn" id="tool-rect" onclick="setTool('rect')" title="Rectangle"><i class="far fa-square"></i></button>
+          <button class="tool-btn" id="tool-circle" onclick="setTool('circle')" title="Circle"><i class="far fa-circle"></i></button>
+          <button class="tool-btn" id="tool-text" onclick="setTool('text')" title="Text"><i class="fas fa-font"></i></button>
+          <div class="tool-divider"></div>
+          <input type="color" id="color-picker" value="#00f5ff" title="Color" onchange="setColor(this.value)" />
+          <div class="tool-divider"></div>
+          <input type="range" id="brush-size" min="1" max="30" value="3" title="Brush Size" oninput="setBrushSize(this.value)" />
+        </div>
+        <canvas id="whiteboard-canvas" class="whiteboard-canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- TERMINAL PAGE -->
+    <div id="page-terminal" class="page hidden">
+      <div class="page-header">
+        <h1 class="page-title">Terminal</h1>
+        <div class="page-actions">
+          <select class="neon-select" id="term-lang">
+            <option value="python">Python</option>
+            <option value="javascript">Node.js</option>
+            <option value="bash">Bash</option>
+          </select>
+          <button class="btn-secondary" onclick="clearTerminal()"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="terminal-container glass-panel">
+        <div class="terminal-header">
+          <span class="term-dot red"></span>
+          <span class="term-dot yellow"></span>
+          <span class="term-dot green"></span>
+          <span class="term-title">hackforge@workspace:~$</span>
+        </div>
+        <div id="terminal-output" class="terminal-output font-mono"></div>
+        <div class="terminal-input-row">
+          <span class="term-prompt">❯</span>
+          <input type="text" id="terminal-input" class="terminal-input font-mono" placeholder="Enter code..." onkeydown="termKeydown(event)" />
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── MODALS ──────────────────────────────────────── -->
+<div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()"></div>
+
+<!-- Generic Modal -->
+<div id="modal" class="modal glass-panel hidden">
+  <div class="modal-header">
+    <h3 id="modal-title">Modal</h3>
+    <button class="icon-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="modal-body" class="modal-body"></div>
+</div>
+
+<!-- Upload Modal -->
+<div id="upload-modal" class="modal modal-wide glass-panel hidden">
+  <div class="modal-header">
+    <h3>Upload Files</h3>
+    <button class="icon-btn" onclick="closeUploadModal()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div id="upload-drop" class="upload-dropzone" ondragover="uploadDragOver(event)" ondragleave="uploadDragLeave(event)" ondrop="uploadDropped(event)" onclick="triggerUploadInput()">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p>Drop files here or click to browse</p>
+      <span class="hint">Max 100MB per file</span>
+    </div>
+    <input type="file" id="upload-input" multiple style="display:none" onchange="filesSelected(this.files)" />
+    <div id="upload-queue" class="upload-queue"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeUploadModal()">Cancel</button>
+      <button class="btn-primary" onclick="startUploads()" id="upload-start-btn" disabled>Upload All</button>
+    </div>
+  </div>
+</div>
+
+<!-- Command Palette -->
+<div id="cmd-palette" class="cmd-palette hidden">
+  <div class="cmd-input-wrapper">
+    <i class="fas fa-search cmd-icon"></i>
+    <input type="text" id="cmd-input" class="cmd-input" placeholder="Type a command or search..." oninput="filterCommands(this.value)" onkeydown="cmdKeydown(event)" />
+    <kbd class="cmd-esc" onclick="hideCommandPalette()">ESC</kbd>
+  </div>
+  <div id="cmd-results" class="cmd-results"></div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Team Picker Modal -->
+<div id="team-picker" class="team-picker glass-panel hidden">
+  <div class="picker-header">
+    <h3>Switch Team</h3>
+    <button class="icon-btn" onclick="closeTeamPicker()"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="team-picker-list" class="team-picker-list"></div>
+  <div class="picker-footer">
+    <button class="btn-primary full-width" onclick="showCreateTeamModal()"><i class="fas fa-plus"></i> Create New Team</button>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

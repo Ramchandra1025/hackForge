@@ -1,0 +1,229 @@
+[2026-05-08 19:21:24] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:23:44] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:24:12] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:24:24] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:24:59] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:26:09] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:28:22] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:28:55] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:32:42] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:32:42] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:32:46] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:33:30] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:33:30] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:33:34] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:34:46] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:34:46] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:34:50] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:35:28] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:35:28] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:35:32] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:35:43] backend.utils.error_handlers - ERROR - Internal error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2026-05-08 19:35:51] backend.utils.error_handlers - ERROR - Unhandled exception: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:35:51] backend.utils.error_handlers - ERROR - Internal error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2026-05-08 19:36:16] backend.utils.error_handlers - ERROR - Unhandled exception: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:36:16] backend.utils.error_handlers - ERROR - Internal error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2026-05-08 19:38:59] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:38:59] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:39:03] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:40:43] backend.utils.db - WARNING - Database initialization warning: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:40:43] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:40:47] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:41:11] backend.utils.error_handlers - ERROR - Unhandled exception: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set
+[2026-05-08 19:44:02] backend.services.supabase_service - WARNING - Supabase not configured: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY missing
+[2026-05-08 19:44:02] backend.utils.db - WARNING - Database initialization warning: 'NoneType' object has no attribute 'table'
+[2026-05-08 19:44:02] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:44:06] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:44:31] backend.services.supabase_service - WARNING - Supabase not configured: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY missing
+[2026-05-08 19:44:31] backend.utils.db - WARNING - Supabase client not available during init; skipping verification
+[2026-05-08 19:44:35] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:47:56] backend.services.supabase_service - WARNING - Supabase not configured: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY missing
+[2026-05-08 19:47:56] backend.utils.db - WARNING - Supabase client not available during init; skipping verification
+[2026-05-08 19:48:00] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:49:52] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:49:54] backend.utils.db - WARNING - Database initialization warning: {'code': 'PGRST123', 'details': None, 'hint': None, 'message': 'Use of aggregate functions is not allowed'}
+[2026-05-08 19:49:54] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 19:49:58] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:50:53] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:50:57] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:51:01] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:52:04] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:52:05] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:52:09] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:54:22] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:54:23] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:54:28] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:56:26] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:56:27] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:56:31] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:58:00] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:58:01] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:58:05] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:59:28] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 19:59:31] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:59:35] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 19:59:52] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 19:59:56] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:06:24] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 20:06:26] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:06:30] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:13:28] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:13:32] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:17:24] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 20:17:25] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:17:30] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:22:42] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:22:46] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:27:38] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 20:27:39] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:27:43] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 20:32:03] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 20:32:04] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 20:32:08] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:08:47] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:09:12] backend.utils.db - WARNING - Database initialization warning: [WinError 10054] An existing connection was forcibly closed by the remote host
+[2026-05-08 21:09:12] backend.utils.db - INFO - Database will be initialized on first use
+[2026-05-08 21:09:16] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:11:46] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA25010>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:11:46] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA32FD0>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:11:46] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA30E10>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:11:53] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA33B10>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:11:53] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA30410>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:11:53] backend.services.email_service - ERROR - EmailJS request failed: HTTPSConnectionPool(host='api.emailjs.com', port=443): Max retries exceeded with url: /api/v1.0/email/send (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001E8AAA30050>: Failed to resolve 'api.emailjs.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-05-08 21:13:46] backend.services.email_service - ERROR - EmailJS error 403: API access from non-browser environments is currently disabled.Enable this option in https://dashboard.emailjs.com/admin/account/security
+[2026-05-08 21:19:18] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:19:19] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:19:23] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:19:37] backend.services.email_service - INFO - EmailJS payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '610197', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:19:38] backend.services.email_service - INFO - EmailJS response: 403 | API access from non-browser environments is currently disabled.Enable this option in https://dashboard.emailjs.com/admin/account/security
+[2026-05-08 21:28:26] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:28:27] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:28:31] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:28:46] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:28:46] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '388758', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:28:48] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:28:48] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:28:54] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:28:54] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '378953', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:28:55] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:28:55] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:29:07] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:29:07] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali99@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '581236', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:29:08] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:29:08] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:31:40] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:31:42] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:31:46] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:32:01] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:32:01] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali99@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '892694', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:32:03] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:32:03] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:32:07] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:32:07] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali99@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '775666', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:32:08] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:32:08] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:32:09] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:32:09] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali99@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '274233', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:32:09] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:32:09] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:33:11] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:33:11] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali99@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '234697', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:33:12] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:33:12] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:35:46] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:35:47] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:35:51] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:36:07] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:36:07] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '772051', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}}
+[2026-05-08 21:36:09] backend.services.email_service - ERROR - EmailJS FAILED
+[2026-05-08 21:36:09] backend.services.email_service - ERROR - EmailJS OTP failed — trying SMTP fallback
+[2026-05-08 21:39:32] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:39:33] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:39:37] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:39:50] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:39:50] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '121129', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:41:03] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:41:03] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '796149', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:45:16] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:45:17] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:45:21] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:45:35] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:45:35] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '530896', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:46:55] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:46:55] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '294592', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:48:32] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:48:33] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:48:37] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:48:43] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 21:48:54] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:48:54] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '905241', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:52:08] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:52:09] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:52:13] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:52:30] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:52:30] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '183517', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 21:55:18] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 21:55:20] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 21:55:24] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 21:55:37] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 21:55:37] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '983179', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 22:02:03] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:02:04] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:02:08] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:02:23] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 22:02:23] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '444938', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 22:05:20] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:05:21] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:05:25] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:05:38] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 22:05:38] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '442835', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 22:12:00] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:12:02] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:12:06] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:12:16] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 22:12:16] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '101959', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 22:16:59] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:17:00] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:17:04] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:17:25] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 22:17:25] backend.services.email_service - INFO - Payload: {'service_id': 'service_yolole3', 'template_id': 'template_yybs8jj', 'user_id': 'yRHc0_CLC_oo34p39', 'template_params': {'to_email': 'ramachandramali7411@gmail.com', 'to_name': 'HackForge Workspace', 'otp': '718258', 'app_name': 'HackForge Workspace', 'expiry_minutes': '5', 'app_url': 'http://localhost:5000', 'purpose': 'signup'}, 'accessToken': 'an403WqsdDGOU8NvFUz6y'}
+[2026-05-08 22:22:04] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:22:06] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:22:10] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:23:18] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 22:23:20] backend.services.email_service - INFO - EmailJS response -> 200 | OK
+[2026-05-08 22:26:19] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:28:52] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column wiki_pages.slug does not exist'}
+[2026-05-08 22:28:53] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column meetings.team_id does not exist'}
+[2026-05-08 22:29:18] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column deployments.team_id does not exist'}
+[2026-05-08 22:29:39] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:30:05] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column wiki_pages.slug does not exist'}
+[2026-05-08 22:30:05] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column deployments.team_id does not exist'}
+[2026-05-08 22:30:31] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:30:40] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:30:49] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:30:55] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column deployments.team_id does not exist'}
+[2026-05-08 22:31:02] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:32:05] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:46:30] backend.services.supabase_service - INFO - Supabase client initialized
+[2026-05-08 22:46:32] backend.utils.db - INFO - Database connection verified. Users table accessible.
+[2026-05-08 22:46:36] backend.utils.redis_client - WARNING - Redis connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.. Will use in-memory fallback.
+[2026-05-08 22:49:43] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column wiki_pages.slug does not exist'}
+[2026-05-08 22:49:44] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column meetings.team_id does not exist'}
+[2026-05-08 22:49:44] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column deployments.team_id does not exist'}
+[2026-05-08 22:49:46] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column wiki_pages.slug does not exist'}
+[2026-05-08 22:50:38] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:50:59] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:51:05] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:53:04] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column ai_memory.role does not exist'}
+[2026-05-08 22:53:39] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column memberships.is_active does not exist'}
+[2026-05-08 22:53:54] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column memberships.is_active does not exist'}
+[2026-05-08 22:53:54] backend.utils.error_handlers - ERROR - Unhandled exception: {'code': '42703', 'details': None, 'hint': None, 'message': 'column memberships.is_active does not exist'}
+[2026-05-08 22:58:54] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:58:54] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:58:54] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:58:54] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 22:58:59] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 23:04:27] backend.utils.error_handlers - ERROR - Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2026-05-08 23:05:33] backend.services.email_service - INFO - Sending EmailJS request...
+[2026-05-08 23:05:35] backend.services.email_service - INFO - EmailJS response -> 200 | OK
